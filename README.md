@@ -1,41 +1,21 @@
-# wordle
+# Wordle francophone
 
-This template should help get you started developing with Vue 3 in Vite.
+La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 
-## Recommended IDE Setup
+## TODO
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur).
+- [ ] Vérifier que le mot existe avant de le confirmer
+- [ ] Sauver les mots confirmés dans le localStorage
+- [ ] Ré-appliquer les mots confirmés après un refresh
+- [ ] 🟩🟩🟩🟩🟩
+- [ ] Animations
 
-## Type Support for `.vue` Imports in TS
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates.
+## Credits
 
-However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+Lexique : http://www.lexique.org/
 
-## Customize configuration
+Développé avec VueJS et TailwindCSS
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Icones : https://github.com/tailwindlabs/heroicons
 
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
