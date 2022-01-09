@@ -48,7 +48,7 @@ const words = ref(['wtf', 'bbq', '', '', '', ''])
 
 const currentWord = computed(() => words.value[wordIndex.value])
 
-function insertLetter(letter: string) {
+function insertLetter(letter: string): void {
   console.log(letter)
 }
 </script>

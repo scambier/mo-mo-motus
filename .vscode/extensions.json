@@ -1,3 +1,14 @@
 {
-  "recommendations": ["johnsoncodehk.volar"]
+  "recommendations": [
+    "johnsoncodehk.volar",
+    "hbenl.vscode-test-explorer",
+    "rvest.vs-code-prettier-eslint",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur",
+    "ms-vscode.vscode-typescript-tslint-plugin"
+  ]
 }
