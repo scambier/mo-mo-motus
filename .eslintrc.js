@@ -2,8 +2,12 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    'vue/setup-compiler-macros': true,
   },
-  extends: ['plugin:vue/essential', 'standard'],
+  globals: {
+    NodeJS: true,
+  },
+  extends: ['plugin:vue/vue3-strongly-recommended', 'standard'],
   parserOptions: {
     ecmaVersion: 13,
     parser: '@typescript-eslint/parser',
@@ -36,25 +40,12 @@ module.exports = {
       },
     ],
     'vue/valid-v-for': 'off',
-    'vue/require-v-for-key': 'off',
+    // 'vue/require-v-for-key': 'off',
     'vue/html-closing-bracket-newline': [
       'error',
       {
         singleline: 'never',
         multiline: 'never',
-      },
-    ],
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: { normal: 'never' },
-      },
-    ],
-    'vue/attribute-hyphenation': [
-      'warn',
-      'never',
-      {
-        ignore: [],
       },
     ],
   },

@@ -17,14 +17,6 @@ function initPRNG(seed: string): () => number {
   return mulberry32(hashed)
 }
 
-export function getRandomWord(): string {
-  return words[Math.floor(Math.random() * words.length)]
-}
-
-export function getWordForToday(): string {
-  return words[Math.floor(random() * words.length)]
-}
-
 /**
  * https://stackoverflow.com/a/7616484
  * @param val
@@ -40,4 +32,16 @@ function hashStr(val: string): number {
     hash |= 0
   }
   return hash
+}
+
+export function getRandomWord(): string {
+  return words[Math.floor(Math.random() * words.length)]
+}
+
+export function getWordForToday(): string {
+  return words[Math.floor(random() * words.length)]
+}
+
+export function doesWordExist(word: string): boolean {
+  return words.includes(word)
 }

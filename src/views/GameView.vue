@@ -1,8 +1,8 @@
 <template>
   <div class="max-w-lg mx-auto">
     <!-- Grid -->
-    <div class="mx-auto w-64" style="aspect-ratio: 5/6">
-      <div class="grid grid-cols-5 gap-1">
+    <div class="mx-auto max-w-xs">
+      <div class="grid grid-cols-5 grid-rows-6 gap-1">
         <template v-for="y in 6">
           <LetterBox
             class="aspect-square"
@@ -10,59 +10,36 @@
               'bg-green-500':
                 guesses[y - 1].confirmed &&
                 letterValidity(getLetter(y - 1, x - 1), x - 1) ===
-                  LetterPosition.Perfect,
+                LetterPosition.Perfect,
               'bg-yellow-500':
                 guesses[y - 1].confirmed &&
                 letterValidity(getLetter(y - 1, x - 1), x - 1) ===
-                  LetterPosition.Misplaced,
+                LetterPosition.Misplaced,
             }"
             v-for="x in 5">
-            <span v-html="getLetter(y - 1, x - 1)"></span>
+            <span v-html="getLetter(y - 1, x - 1)" />
           </LetterBox>
         </template>
       </div>
     </div>
 
     <!-- Keyboard -->
-    <div class="flex flex-col gap-1 mt-4 max-w-full">
-      <div
-        v-for="(line, i) in keyboard"
-        class="flex gap-1 w-full justify-center">
-        <template v-for="(letter, j) in line">
-          <!-- Enter -->
-          <LetterBox v-if="i === 2 && j === 0" @click="checkCurrentWord">
-            ENTRÉE
-          </LetterBox>
-
-          <!-- Letter -->
-          <LetterBox
-            class="flex-1"
-            :class="{ 'text-gray-400 bg-black': invalidLetters.has(letter) }"
-            @click="insertLetter(letter)">
-            {{ letter }}
-          </LetterBox>
-
-          <!-- Delete -->
-          <LetterBox
-            class=""
-            v-if="i === 2 && j === line.length - 1"
-            @click="removeLastLetter">
-            <BackspaceIcon class="w-6 h-6" />
-          </LetterBox>
-        </template>
-      </div>
-    </div>
+    <VisualKeyboard
+      @input="letter => insertLetter(letter)"
+      @enter="checkCurrentWord"
+      @delete="removeLastLetter"
+      :greyed-out="invalidLetters" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import LetterBox from '@/components/LetterBox.vue'
-import { BackspaceIcon } from '@heroicons/vue/outline/esm'
-import { getRandomWord, getWordForToday } from '@/composables/words-list'
+import { doesWordExist, getWordForToday } from '@/composables/words-list'
 import { WordInput } from '@/types'
+import VisualKeyboard from '@/components/VisualKeyboard.vue'
+import { showToast } from '@/composables/toast-manager'
 
-getWordForToday()
 const wordToFind = getWordForToday()
 
 enum LetterPosition {
@@ -70,12 +47,6 @@ enum LetterPosition {
   Perfect,
   Misplaced,
 }
-
-const keyboard = [
-  'azertyuiop'.toUpperCase().split(''),
-  'qsdfghjklm'.toUpperCase().split(''),
-  'wxcvbn'.toUpperCase().split(''),
-]
 
 console.log(wordToFind)
 // const wordIndex = ref(0)
@@ -113,6 +84,16 @@ function removeLastLetter(): void {
 function checkCurrentWord(): void {
   if (!currentGuess.value) return
   const word = currentGuess.value.word
+
+  // Check if the word exists
+  if (!doesWordExist(word)) {
+    showToast(
+      "Ce mot n'existe pas dans notre liste.<br>Veuillez entrer un véritable mot.",
+      5000,
+    )
+    return
+  }
+
   currentGuess.value.confirmed = true
 
   // Save incorrect letters to darken them
