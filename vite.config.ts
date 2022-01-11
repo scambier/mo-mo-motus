@@ -3,6 +3,8 @@ import { fileURLToPath, URL } from 'url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
+process.env.VITE_BUILD_DATE = new Date().toISOString()
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],

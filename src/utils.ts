@@ -1,5 +1,9 @@
 export function getCurrentDate(): string {
-  return new Date().toISOString().slice(0, 10)
+  const tzoffset = new Date().getTimezoneOffset() * 60000 // offset in milliseconds
+  const localISOTime = new Date(Date.now() - tzoffset)
+    .toISOString()
+    .slice(0, -1)
+  return localISOTime.slice(0, 10) + ' - ' + import.meta.env.VITE_BUILD_DATE
 }
 
 export const random = initPRNG(getCurrentDate())
