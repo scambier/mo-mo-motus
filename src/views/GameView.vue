@@ -3,21 +3,19 @@
     <!-- Grid -->
     <div class="mx-auto max-w-xs">
       <div class="grid grid-cols-5 grid-rows-6 gap-1">
-        <template v-for="y in 6">
+        <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
+            v-for="x in [0, 1, 2, 3, 4]"
             class="uppercase aspect-square font-bold text-2xl"
             :class="{
               'bg-green-500 text-black':
-                guesses[y - 1].confirmed &&
-                letterValidity(getLetter(y - 1, x - 1), x - 1) ===
-                LetterPosition.Perfect,
+                guesses[y].confirmed &&
+                letterValidity(getLetter(y, x), x) === LetterPosition.Perfect,
               'bg-yellow-500 text-black':
-                guesses[y - 1].confirmed &&
-                letterValidity(getLetter(y - 1, x - 1), x - 1) ===
-                LetterPosition.Misplaced,
-            }"
-            v-for="x in 5">
-            <span v-html="getLetter(y - 1, x - 1)" />
+                guesses[y].confirmed &&
+                letterValidity(getLetter(y, x), x) === LetterPosition.Misplaced,
+            }">
+            <span v-html="getLetter(y, x)" />
           </LetterBox>
         </template>
       </div>
@@ -39,6 +37,7 @@ import { doesWordExist, getWordForToday } from '@/composables/words-list'
 import { WordInput } from '@/types'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import { showToast } from '@/composables/toast-manager'
+import { saveConfirmedWords } from '@/composables/storage'
 
 const wordToFind = getWordForToday()
 
@@ -51,7 +50,7 @@ enum LetterPosition {
 console.log(wordToFind)
 // const wordIndex = ref(0)
 const guesses = ref<WordInput[]>([
-  { word: 'chien', confirmed: false },
+  { word: '', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
@@ -59,6 +58,11 @@ const guesses = ref<WordInput[]>([
   { word: '', confirmed: false },
 ])
 const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
+
+const currentRowIndex = computed(() =>
+  currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
+)
+const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
 
 /**
  * List of letters not in the word
@@ -95,6 +99,7 @@ function checkCurrentWord(): void {
   }
 
   currentGuess.value.confirmed = true
+  saveConfirmedWords(guesses.value.map(o => o.word))
 
   // Save incorrect letters to darken them
   for (let i = 0; i < word.length; ++i) {
@@ -105,7 +110,15 @@ function checkCurrentWord(): void {
 }
 
 function getLetter(wordIndex: number, letterIndex: number): string {
-  return guesses.value[wordIndex]?.word[letterIndex] ?? '&nbsp;'
+  const letter = guesses.value[wordIndex]?.word[letterIndex]
+  if (letter) return letter
+  if (
+    wordIndex === currentRowIndex.value &&
+    letterIndex === currentColumnIndex.value
+  ) {
+    return '_'
+  }
+  return '&nbsp;'
 }
 
 function letterValidity(letter: string, index: number): LetterPosition {
