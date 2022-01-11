@@ -1,16 +1,18 @@
 import { getCurrentDate } from '@/utils'
+import { showToast } from './toast-manager'
 
 const prefix = 'wordle_'
 
 export function initSessionForToday(force = false): void {
-  const today = getCurrentDate()
+  const appSessionKey = getCurrentDate()
 
-  if (getItem('session') === today && !force) {
+  const hasSession = !!getItem('session')
+  if (getItem('session') === appSessionKey && !force) {
     return
   }
 
   // Clear
-  for (let i = 0; i < localStorage.length; i++) {
+  for (let i = localStorage.length; i > 0; --i) {
     const key = localStorage.key(i)
     if (key?.startsWith(prefix)) {
       localStorage.removeItem(key)
@@ -18,7 +20,13 @@ export function initSessionForToday(force = false): void {
   }
 
   // Init
-  setItem('session', today)
+  setItem('session', appSessionKey)
+  if (hasSession) {
+    showToast(
+      "L'app a été mise à jour !<br>Un nouveau mot à deviner a été choisi.",
+      7000,
+    )
+  }
 }
 
 export function saveConfirmedWords(words: string[]): void {
@@ -27,9 +35,14 @@ export function saveConfirmedWords(words: string[]): void {
 
 export function getConfirmedWords(): string[] {
   try {
-    return (JSON.parse(getItem('words')!) as string[]).filter(o => !!o)
+    const words = getItem('words')
+    if (words) {
+      return (JSON.parse(words) as string[]).filter(o => !!o)
+    }
+    return []
   }
   catch (e) {
+    console.error(e)
     initSessionForToday(true)
     return []
   }
