@@ -7,13 +7,17 @@ module.exports = {
   globals: {
     NodeJS: true,
   },
-  extends: ['plugin:vue/vue3-strongly-recommended', 'standard'],
+  extends: [
+    'plugin:vue/vue3-strongly-recommended',
+    'standard',
+    'plugin:tailwindcss/recommended',
+  ],
   parserOptions: {
     ecmaVersion: 13,
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
-  plugins: ['vue', '@typescript-eslint'],
+  plugins: ['vue', '@typescript-eslint', 'tailwindcss'],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'arrow-parens': ['error', 'as-needed'],
