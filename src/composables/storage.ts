@@ -1,10 +1,11 @@
 import { getCurrentDate } from '@/utils'
 
 const prefix = 'wordle_'
-export function initSessionForToday(): void {
+
+export function initSessionForToday(force = false): void {
   const today = getCurrentDate()
 
-  if (getItem('session') === today) {
+  if (getItem('session') === today && !force) {
     return
   }
 
@@ -22,6 +23,16 @@ export function initSessionForToday(): void {
 
 export function saveConfirmedWords(words: string[]): void {
   setItem('words', JSON.stringify(words))
+}
+
+export function getConfirmedWords(): string[] {
+  try {
+    return (JSON.parse(getItem('words')!) as string[]).filter(o => !!o)
+  }
+  catch (e) {
+    initSessionForToday(true)
+    return []
+  }
 }
 
 function setItem(key: string, val: string): void {

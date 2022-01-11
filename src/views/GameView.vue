@@ -37,7 +37,10 @@ import { doesWordExist, getWordForToday } from '@/composables/words-list'
 import { WordInput } from '@/types'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import { showToast } from '@/composables/toast-manager'
-import { saveConfirmedWords } from '@/composables/storage'
+import {
+  getConfirmedWords as getsavedWords,
+  saveConfirmedWords,
+} from '@/composables/storage'
 
 const wordToFind = getWordForToday()
 
@@ -57,6 +60,12 @@ const guesses = ref<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
 ])
+const savedWords = getsavedWords()
+for (let i = 0; i < savedWords.length; ++i) {
+  guesses.value[0].word = savedWords[i]
+  guesses.value[0].confirmed = true
+}
+
 const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
 
 const currentRowIndex = computed(() =>
