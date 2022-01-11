@@ -4,7 +4,7 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 
 ## TODO
 
-- [ ] Vérifier que le mot existe avant de le confirmer
+- [x] Vérifier que le mot existe avant de le confirmer
 - [ ] Sauver les mots confirmés dans le localStorage
 - [ ] Ré-appliquer les mots confirmés après un refresh
 - [ ] 🟩🟩🟩🟩🟩

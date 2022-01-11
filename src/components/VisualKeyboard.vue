@@ -19,8 +19,12 @@
         <!-- Letter -->
         <button
           class="flex-1"
-          :class="{ 'text-gray-400 bg-black': greyedOut?.has(letter) }">
-          <LetterBox @click="emit('input', letter)">
+          :class="{
+            'text-gray-400 bg-black': greyedOut?.has(letter),
+          }">
+          <LetterBox
+            @click="emit('input', letter)"
+            class="uppercase">
             {{ letter }}
           </LetterBox>
         </button>
@@ -53,8 +57,8 @@ const emit = defineEmits<{
 defineProps<{ greyedOut?: Set<string> }>()
 
 const keyboard = [
-  'azertyuiop'.toUpperCase().split(''),
-  'qsdfghjklm'.toUpperCase().split(''),
-  'wxcvbn'.toUpperCase().split(''),
+  'azertyuiop'.split(''),
+  'qsdfghjklm'.split(''),
+  'wxcvbn'.split(''),
 ]
 </script>

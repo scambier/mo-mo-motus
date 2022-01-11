@@ -5,13 +5,13 @@
       <div class="grid grid-cols-5 grid-rows-6 gap-1">
         <template v-for="y in 6">
           <LetterBox
-            class="aspect-square"
+            class="uppercase aspect-square font-bold text-2xl"
             :class="{
-              'bg-green-500':
+              'bg-green-500 text-black':
                 guesses[y - 1].confirmed &&
                 letterValidity(getLetter(y - 1, x - 1), x - 1) ===
                 LetterPosition.Perfect,
-              'bg-yellow-500':
+              'bg-yellow-500 text-black':
                 guesses[y - 1].confirmed &&
                 letterValidity(getLetter(y - 1, x - 1), x - 1) ===
                 LetterPosition.Misplaced,
@@ -51,7 +51,7 @@ enum LetterPosition {
 console.log(wordToFind)
 // const wordIndex = ref(0)
 const guesses = ref<WordInput[]>([
-  { word: 'ABOOC', confirmed: false },
+  { word: 'chien', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
@@ -109,12 +109,10 @@ function getLetter(wordIndex: number, letterIndex: number): string {
 }
 
 function letterValidity(letter: string, index: number): LetterPosition {
-  letter = letter.toLowerCase()
-  const word = wordToFind.toLowerCase()
-  if (word[index] === letter) {
+  if (wordToFind[index] === letter) {
     return LetterPosition.Perfect
   }
-  if (word.includes(letter)) {
+  if (wordToFind.includes(letter)) {
     return LetterPosition.Misplaced
   }
   return LetterPosition.Invalid
