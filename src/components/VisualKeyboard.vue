@@ -1,47 +1,45 @@
 <template>
-  <div class="flex flex-col gap-1 mt-4 fixed bottom-0 sm:bottom-auto">
+  <div>
+    <!-- Row -->
     <div
       v-for="(line, i) in keyboard"
       :key="`line-${i}`"
-      class="gap-1 flex w-full justify-center">
+      class="flex h-1/3 justify-center w-full mb-1 gap-1">
       <!-- Keys -->
       <template
         v-for="(letter, j) in line"
         :key="`key-${i}`">
         <!-- Enter -->
-        <button
-          class="grow-2 shrink-2 basis-0"
+
+        <LetterBox
           v-if="i === 2 && j === 0"
-          @click="emit('enter')">
-          <LetterBox> ENTRÉE </LetterBox>
-        </button>
+          is="button"
+          @click="emit('enter')"
+          class="bg-gray-600">
+          ENTRÉE
+        </LetterBox>
 
         <!-- Letter -->
-        <button
-          class="flex-1"
-          :class="{
-            'text-gray-400 bg-black': greyedOut?.has(letter),
-          }">
-          <LetterBox
-            @click="emit('input', letter)"
-            class="uppercase">
-            {{ letter }}
-          </LetterBox>
-        </button>
+        <LetterBox
+          is="button"
+          @click="emit('input', letter)"
+          class="uppercase bg-gray-600"
+          :class="{ 'text-gray-400 bg-black': greyedOut?.has(letter) }">
+          {{ letter }}
+        </LetterBox>
 
         <!-- Delete -->
-        <button
-          class="grow-2 shrink-2 basis-0"
+
+        <LetterBox
           v-if="i === 2 && j === line.length - 1"
-          @click="emit('delete')">
-          <LetterBox>
-            <BackspaceIcon class="w-6 h-6" />
-          </LetterBox>
-        </button>
+          is="button"
+          @click="emit('delete')"
+          class="bg-gray-600">
+          <BackspaceIcon class="w-6 h-6" />
+        </LetterBox>
       </template>
     </div>
   </div>
-  <span />
 </template>
 
 <script setup lang="ts">

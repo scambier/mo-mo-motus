@@ -1,8 +1,14 @@
 <template>
-  <div
-    class="flex items-center p-4 border-2 border-slate-600 rounded justify-center text-white select-none">
+  <Component
+    :is="is"
+    class="flex flex-1 items-center border-slate-600 rounded justify-center text-white select-none">
     <slot />
-  </div>
+  </Component>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
+
+const props = defineProps<{ is?: string }>()
+const is = ref(props.is ?? 'div')
+</script>

@@ -1,12 +1,13 @@
 <template>
-  <div class="max-w-lg mx-auto">
-    <!-- Grid -->
-    <div class="mx-auto max-w-xs">
+  <div class="w-full h-full max-w-lg mx-auto flex flex-col">
+    <!-- Grid container -->
+    <div class="flex-1 justify-center">
+      <!-- Grid -->
       <div class="grid grid-cols-5 grid-rows-6 gap-1">
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="uppercase aspect-square font-bold text-2xl"
+            class="uppercase aspect-square font-bold text-2xl border-2"
             :class="{
               'bg-green-500 text-black':
                 guesses[y].confirmed &&
@@ -23,6 +24,7 @@
 
     <!-- Keyboard -->
     <VisualKeyboard
+      class="h-48 shrink-0 m-2 sm:mt-4 bottom-0"
       @input="letter => insertLetter(letter)"
       @enter="checkCurrentWord"
       @delete="removeLastLetter"
