@@ -1,7 +1,7 @@
 <template>
   <Component
     :is="is"
-    class="flex flex-1 items-center border-slate-600 rounded justify-center text-white select-none">
+    class="flex flex-1 justify-center items-center p-1 text-white rounded border-slate-600 select-none">
     <slot />
   </Component>
 </template>

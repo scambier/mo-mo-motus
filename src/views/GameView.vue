@@ -1,13 +1,14 @@
 <template>
-  <div class="w-full h-full max-w-lg mx-auto flex flex-col">
+  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
     <!-- Grid container -->
-    <div class="flex-1 justify-center">
+    <div class="flex flex-1 justify-center">
       <!-- Grid -->
-      <div class="grid grid-cols-5 grid-rows-6 gap-1">
+      <div
+        class="aspect-[5/6] grid grid-cols-5 grid-rows-6 gap-1 m-4 md:max-h-[50vh]">
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="uppercase aspect-square font-bold text-2xl border-2"
+            class="aspect-square text-2xl font-bold uppercase border-2"
             :class="{
               'bg-green-500 text-black':
                 guesses[y].confirmed &&
@@ -24,7 +25,7 @@
 
     <!-- Keyboard -->
     <VisualKeyboard
-      class="h-48 shrink-0 m-2 sm:mt-4 bottom-0"
+      class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 sm:mb-8"
       @input="letter => insertLetter(letter)"
       @enter="checkCurrentWord"
       @delete="removeLastLetter"
@@ -47,13 +48,11 @@ import {
 const wordToFind = getWordForToday()
 
 enum LetterPosition {
-  Invalid,
+  Invalid = 0,
   Perfect,
   Misplaced,
 }
 
-console.log(wordToFind)
-// const wordIndex = ref(0)
 const guesses = ref<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
@@ -62,11 +61,6 @@ const guesses = ref<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
 ])
-const savedWords = getsavedWords()
-for (let i = 0; i < savedWords.length; ++i) {
-  guesses.value[0].word = savedWords[i]
-  guesses.value[0].confirmed = true
-}
 
 const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
 
@@ -79,6 +73,16 @@ const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
  * List of letters not in the word
  */
 const invalidLetters = ref<Set<string>>(new Set())
+
+const savedWords = getsavedWords()
+
+/**
+ * Load saved words at startup
+ */
+for (let i = 0; i < savedWords.length; ++i) {
+  guesses.value[i].word = savedWords[i]
+  checkCurrentWord()
+}
 
 function insertLetter(letter: string): void {
   if (!currentGuess.value) return
@@ -103,7 +107,7 @@ function checkCurrentWord(): void {
   // Check if the word exists
   if (!doesWordExist(word)) {
     showToast(
-      "Ce mot n'existe pas dans notre liste.<br>Veuillez entrer un véritable mot.",
+      "Ce mot n'existe pas dans notre liste.<br>Veuillez essayer un autre mot.",
       5000,
     )
     return

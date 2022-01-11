@@ -5,17 +5,17 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 ## TODO
 
 - [x] Vérifier que le mot existe avant de le confirmer
-- [ ] Sauver les mots confirmés dans le localStorage
-- [ ] Ré-appliquer les mots confirmés après un refresh
+- [x] Sauver les mots confirmés dans le localStorage
+- [x] Ré-appliquer les mots confirmés après un refresh
+- [ ] Ecran de victoire
+- [ ] Ecran d'échec
 - [ ] 🟩🟩🟩🟩🟩
 - [ ] Animations
 
 
-## Credits
+## Credits / références
 
-Lexique : http://www.lexique.org/
+- Lexique : http://www.3zsoftware.com/fr/listes.php
+- Développé avec VueJS et TailwindCSS
 
-Développé avec VueJS et TailwindCSS
-
-Icones : https://github.com/tailwindlabs/heroicons
 
