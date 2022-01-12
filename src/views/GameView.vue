@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
     <!-- Grid container -->
-    <div class="flex flex-1 justify-center">
+    <div class="flex flex-1 justify-center w-full">
       <!-- Grid -->
       <div
         class="aspect-[5/6] grid grid-cols-5 grid-rows-6 gap-1 m-4 md:max-h-[50vh]">
