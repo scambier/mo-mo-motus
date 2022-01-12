@@ -4,19 +4,19 @@
     <div
       v-for="(line, i) in keyboard"
       :key="`line-${i}`"
-      class="flex h-1/3 justify-center w-full mb-1 gap-1">
+      class="flex gap-1 justify-center mb-1 w-full h-1/3">
       <!-- Keys -->
       <template
         v-for="(letter, j) in line"
         :key="`key-${i}`">
         <!-- Enter -->
-
         <LetterBox
           v-if="i === 2 && j === 0"
           is="button"
           @click="emit('enter')"
-          class="bg-gray-600">
-          ENTRÉE
+          title="Entrée"
+          class="flex flex-col bg-gray-600">
+          <IconReturn class="w-8 h-8" />
         </LetterBox>
 
         <!-- Letter -->
@@ -29,13 +29,13 @@
         </LetterBox>
 
         <!-- Delete -->
-
         <LetterBox
           v-if="i === 2 && j === line.length - 1"
           is="button"
           @click="emit('delete')"
+          title="Effacer"
           class="bg-gray-600">
-          <BackspaceIcon class="w-6 h-6" />
+          <IconBackspace class="w-6 h-6" />
         </LetterBox>
       </template>
     </div>
@@ -43,8 +43,9 @@
 </template>
 
 <script setup lang="ts">
-import { BackspaceIcon } from '@heroicons/vue/outline/esm'
 import LetterBox from './LetterBox.vue'
+import IconBackspace from '~icons/ph/arrow-left'
+import IconReturn from '~icons/ph/arrow-elbow-down-left'
 
 const emit = defineEmits<{
   (e: 'enter'): void
