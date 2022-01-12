@@ -8,8 +8,8 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 - [x] Sauver les mots confirmés dans le localStorage
 - [x] Ré-appliquer les mots confirmés après un refresh
 - [x] Support clavier
-- [ ] Ecran de victoire
-- [ ] Ecran d'échec
+- [x] Ecran de victoire
+- [x] Ecran d'échec
 - [ ] 🟩🟩🟩🟩🟩
 - [ ] Animations
 

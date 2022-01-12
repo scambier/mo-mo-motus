@@ -35,9 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect, watch, onMounted, onUnmounted } from 'vue'
+import { computed, ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import LetterBox from '@/components/LetterBox.vue'
-import { doesWordExist, getWordForToday } from '@/composables/words-list'
+import { doesWordExist, guesses, isGameover, wordToFind } from '@/composables/words'
 import { WordInput } from '@/types'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import { showToast } from '@/composables/toast-manager'
@@ -61,6 +61,7 @@ function onSizeChange(): void {
 }
 
 function onKeyPress(e: KeyboardEvent): void {
+  if (e.shiftKey || e.ctrlKey) return
   const k = e.key.toLowerCase()
   const keyCode = k.charCodeAt(0)
 
@@ -81,22 +82,11 @@ function onKeyPress(e: KeyboardEvent): void {
   }
 }
 
-const wordToFind = getWordForToday()
-
 enum LetterPosition {
   Invalid = 0,
   Perfect,
   Misplaced,
 }
-
-const guesses = ref<WordInput[]>([
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-])
 
 const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
 
@@ -113,7 +103,7 @@ const invalidLetters = ref<Set<string>>(new Set())
 const savedWords = getsavedWords()
 
 function pressLetter(letter: string): void {
-  if (!currentGuess.value) return
+  if (!currentGuess.value || isGameover.value) return
   if (currentGuess.value.word.length === 5) {
     return
   }
@@ -129,11 +119,12 @@ function pressBackspace(): void {
 }
 
 function pressEnter(): void {
-  if (!currentGuess.value) return
+  if (!currentGuess.value || isGameover.value) return
   const word = currentGuess.value.word
+  if (word.length < 5) return
 
   // Check if the word exists
-  if (!doesWordExist(word)) {
+  if (word && !doesWordExist(word)) {
     showToast(
       "Ce mot n'existe pas dans notre liste.<br>Veuillez essayer un autre mot.",
       5000,

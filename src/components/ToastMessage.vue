@@ -2,12 +2,12 @@
   <Transition>
     <div
       v-if="toastVisible"
-      class="fixed bg-white p-2 rounded mx-auto top-4 left-0 right-0 w-max text-center"
+      class="fixed inset-x-0 top-4 p-2 mx-auto w-max text-center bg-white rounded"
       v-html="toastMessage" />
   </Transition>
 </template>
 
-<style>
+<style scoped>
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
