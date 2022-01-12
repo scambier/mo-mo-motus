@@ -16,6 +16,7 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 
 ## Credits / références
 
+- Le Wordle original: https://www.powerlanguage.co.uk/wordle/
 - Lexique : http://www.3zsoftware.com/fr/listes.php
 - Développé avec VueJS et TailwindCSS
 
