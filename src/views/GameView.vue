@@ -9,7 +9,7 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="aspect-square text-2xl font-bold uppercase border-2"
+            class="h-[100%] text-2xl font-bold uppercase border-2"
             :class="{
               'bg-green-500 text-black':
                 guesses[y].confirmed &&
@@ -27,9 +27,9 @@
     <!-- Keyboard -->
     <VisualKeyboard
       class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 md:mb-8"
-      @input="letter => insertLetter(letter)"
-      @enter="checkCurrentWord"
-      @delete="removeLastLetter"
+      @input="letter => pressLetter(letter)"
+      @enter="pressEnter"
+      @delete="pressBackspace"
       :greyed-out="invalidLetters" />
   </div>
 </template>
@@ -46,20 +46,10 @@ import {
   saveConfirmedWords,
 } from '@/composables/storage'
 
-onMounted(() => {
-  window.addEventListener('resize', onSizeChange)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('resize', onSizeChange)
-})
-
 const grid = ref<HTMLDivElement | null>(null)
-watchEffect(
-  () => {
-    if (grid.value) onSizeChange()
-  }
-)
+watchEffect(() => {
+  if (grid.value) onSizeChange()
+})
 /**
  * Firefox shows issues with aspect-ratio.
  * This is a hack to make sure that the grid always looks good.
@@ -70,13 +60,27 @@ function onSizeChange(): void {
   }
 }
 
-// setInterval(() => {
-//   // console.log(screen.height)
-//   // if (grid.value?.clientWidth) {
-//   //   console.log(grid.value.clientWidth)
-//   //   grid.value.style.height = Number(grid.value?.clientWidth) * (6 / 5) + 'px'
-//   // }
-// }, 1000)
+function onKeyPress(e: KeyboardEvent): void {
+  const k = e.key.toLowerCase()
+  const keyCode = k.charCodeAt(0)
+
+  // Key between "a" and "z"
+  if (k.length === 1 && keyCode >= 97 && keyCode <= 122) {
+    pressLetter(k)
+  }
+
+  // Enter
+  if (k === 'enter') {
+    pressEnter()
+  }
+
+  // Backspace
+  if (k === 'backspace') {
+    console.log('del')
+    pressBackspace()
+  }
+}
+
 const wordToFind = getWordForToday()
 
 enum LetterPosition {
@@ -108,15 +112,7 @@ const invalidLetters = ref<Set<string>>(new Set())
 
 const savedWords = getsavedWords()
 
-/**
- * Load saved words at startup
- */
-for (let i = 0; i < savedWords.length; ++i) {
-  guesses.value[i].word = savedWords[i]
-  checkCurrentWord()
-}
-
-function insertLetter(letter: string): void {
+function pressLetter(letter: string): void {
   if (!currentGuess.value) return
   if (currentGuess.value.word.length === 5) {
     return
@@ -124,7 +120,7 @@ function insertLetter(letter: string): void {
   currentGuess.value.word += letter
 }
 
-function removeLastLetter(): void {
+function pressBackspace(): void {
   if (!currentGuess.value) return
   currentGuess.value.word = currentGuess.value.word.substring(
     0,
@@ -132,7 +128,7 @@ function removeLastLetter(): void {
   )
 }
 
-function checkCurrentWord(): void {
+function pressEnter(): void {
   if (!currentGuess.value) return
   const word = currentGuess.value.word
 
@@ -177,4 +173,22 @@ function letterValidity(letter: string, index: number): LetterPosition {
   }
   return LetterPosition.Invalid
 }
+
+onMounted(() => {
+  window.addEventListener('resize', onSizeChange)
+  document.addEventListener('keydown', onKeyPress) // Note: 'keypress' doesn't work for backspace
+
+  /**
+   * Load saved words at startup
+   */
+  for (let i = 0; i < savedWords.length; ++i) {
+    guesses.value[i].word = savedWords[i]
+    pressEnter()
+  }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onSizeChange)
+  document.removeEventListener('keydown', onKeyPress)
+})
 </script>
