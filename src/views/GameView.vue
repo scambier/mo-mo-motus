@@ -4,7 +4,8 @@
     <div class="flex flex-1 justify-center w-full">
       <!-- Grid -->
       <div
-        class="aspect-[5/6] grid grid-cols-5 grid-rows-6 gap-1 m-4 md:max-h-[50vh]">
+        ref="grid"
+        class="aspect-[5/6] grid grid-cols-5 grid-rows-6 gap-1 m-4 max-w-full md:max-h-[50vh]">
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
@@ -25,7 +26,7 @@
 
     <!-- Keyboard -->
     <VisualKeyboard
-      class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 sm:mb-8"
+      class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 md:mb-8"
       @input="letter => insertLetter(letter)"
       @enter="checkCurrentWord"
       @delete="removeLastLetter"
@@ -34,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watchEffect, watch, onMounted, onUnmounted } from 'vue'
 import LetterBox from '@/components/LetterBox.vue'
 import { doesWordExist, getWordForToday } from '@/composables/words-list'
 import { WordInput } from '@/types'
@@ -45,6 +46,37 @@ import {
   saveConfirmedWords,
 } from '@/composables/storage'
 
+onMounted(() => {
+  window.addEventListener('resize', onSizeChange)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', onSizeChange)
+})
+
+const grid = ref<HTMLDivElement | null>(null)
+watchEffect(
+  () => {
+    if (grid.value) onSizeChange()
+  }
+)
+/**
+ * Firefox shows issues with aspect-ratio.
+ * This is a hack to make sure that the grid always looks good.
+ */
+function onSizeChange(): void {
+  if (grid.value) {
+    grid.value.style.height = window.innerWidth + 'px'
+  }
+}
+
+// setInterval(() => {
+//   // console.log(screen.height)
+//   // if (grid.value?.clientWidth) {
+//   //   console.log(grid.value.clientWidth)
+//   //   grid.value.style.height = Number(grid.value?.clientWidth) * (6 / 5) + 'px'
+//   // }
+// }, 1000)
 const wordToFind = getWordForToday()
 
 enum LetterPosition {
