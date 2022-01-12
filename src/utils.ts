@@ -3,7 +3,7 @@ export function getCurrentDate(): string {
   const localISOTime = new Date(Date.now() - tzoffset)
     .toISOString()
     .slice(0, -1)
-  return localISOTime.slice(0, 10) + ' - ' + import.meta.env.VITE_BUILD_DATE
+  return localISOTime.slice(0, 10)
 }
 
 export const random = initPRNG(getCurrentDate())
