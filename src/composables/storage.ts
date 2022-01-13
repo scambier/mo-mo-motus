@@ -1,4 +1,5 @@
 import { getCurrentDate } from '@/utils'
+import { guesses } from './game-state'
 import { showToast } from './toast-manager'
 
 const prefix = 'wordle_'
@@ -21,11 +22,8 @@ export function initSessionForToday(force = false): void {
 
   // Init
   setItem('session', appSessionKey)
-  if (hasSession) {
-    showToast(
-      "L'app a été mise à jour !<br>Un nouveau mot à deviner a été choisi.",
-      7000,
-    )
+  if (hasSession && guesses.value.some(o => !!o.word)) {
+    showToast('Un nouveau mot à deviner a été choisi.', 5000)
   }
 }
 

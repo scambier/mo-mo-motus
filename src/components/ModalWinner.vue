@@ -7,6 +7,7 @@
       Le mot à trouver était
       <b><a
         :href="`https://fr.wiktionary.org/wiki/${wordToFind}`"
+        class="underline"
         target="_blank">{{ wordToFind.toUpperCase() }}</a></b>
     </div>
     <div class="mb-4">
@@ -15,8 +16,7 @@
 
     <div class="flex items-center">
       <span class="grow-0 shrink mr-4 text-left">
-        En attendant, vous pouvez toujours vous vanter auprès de vos amis en
-        cliquant&nbsp;ici
+        En attendant, vous pouvez toujours vous vanter auprès de vos amis.
       </span>
       <ShareButton />
     </div>
@@ -24,6 +24,6 @@
 </template>
 <script setup lang="ts">
 import ModalBase from './ModalBase.vue'
-import { wordToFind } from '@/composables/words'
+import { wordToFind } from '@/composables/game-state'
 import ShareButton from './ShareButton.vue'
 </script>

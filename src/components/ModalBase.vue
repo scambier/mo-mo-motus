@@ -3,9 +3,10 @@
   <Transition>
     <div
       v-if="isVisible"
-      class="flex absolute top-0 left-0 justify-center items-center w-screen h-screen text-white bg-black/40">
+      class="flex absolute top-0 left-0 justify-center w-screen h-screen text-white bg-black/40">
       <!-- Content -->
-      <div class="relative p-8 text-lg text-center bg-slate-900 rounded-lg">
+      <div
+        class="relative p-8 m-4 mt-16 h-fit text-lg text-center bg-slate-900 rounded-lg">
         <button
           class="absolute top-2 right-2 text-xl"
           @click="closeModal">
@@ -26,7 +27,8 @@
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
-}</style>
+}
+</style>
 
 <script setup lang="ts">
 import { ref } from 'vue'

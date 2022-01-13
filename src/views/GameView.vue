@@ -1,5 +1,8 @@
 <template>
   <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
+    <h1 class="m-4 text-3xl font-bold text-white">
+      MO-MO-MOTUS
+    </h1>
     <!-- Grid container -->
     <div class="flex flex-1 justify-center w-full">
       <!-- Grid -->
@@ -37,8 +40,13 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import LetterBox from '@/components/LetterBox.vue'
-import { doesWordExist, guesses, isGameover, wordToFind } from '@/composables/words'
-import { WordInput } from '@/types'
+import {
+  doesWordExist,
+  guesses,
+  isGameover,
+  LetterPosition,
+  letterValidity,
+} from '@/composables/game-state'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import { showToast } from '@/composables/toast-manager'
 import {
@@ -80,12 +88,6 @@ function onKeyPress(e: KeyboardEvent): void {
     console.log('del')
     pressBackspace()
   }
-}
-
-enum LetterPosition {
-  Invalid = 0,
-  Perfect,
-  Misplaced,
 }
 
 const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
@@ -153,16 +155,6 @@ function getLetter(wordIndex: number, letterIndex: number): string {
     return '_'
   }
   return '&nbsp;'
-}
-
-function letterValidity(letter: string, index: number): LetterPosition {
-  if (wordToFind[index] === letter) {
-    return LetterPosition.Perfect
-  }
-  if (wordToFind.includes(letter)) {
-    return LetterPosition.Misplaced
-  }
-  return LetterPosition.Invalid
 }
 
 onMounted(() => {
