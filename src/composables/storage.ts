@@ -1,4 +1,4 @@
-import { getSessionId } from '@/utils'
+import { getCurrentDate, getSessionId } from '@/utils'
 import { guesses } from './game-state'
 import { showToast } from './toast-manager'
 
@@ -45,6 +45,21 @@ export function getConfirmedWords(): string[] {
     return []
   }
 }
+
+export const lastWelcomeDate: Date = (() => {
+  try {
+    return new Date(getItem('lastWelcome')!)
+  }
+  catch (e) {
+    return new Date('1970-01-01')
+  }
+})()
+
+export function setLastWelcomeDate(): void {
+  setItem('lastWelcome', getCurrentDate().toISOString())
+}
+
+/**/
 
 function setItem(key: string, val: string): void {
   localStorage.setItem(prefix + key, val)

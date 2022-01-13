@@ -25,6 +25,10 @@
 
 <script setup lang="ts">
 import ModalBase from './ModalBase.vue'
-import { getTimeBeforeNextWord, wordToFind, wordToFindAccented } from '@/composables/game-state'
+import {
+  getTimeBeforeNextWord,
+  wordToFind,
+  wordToFindAccented,
+} from '@/composables/game-state'
 import ShareButton from './ShareButton.vue'
 </script>

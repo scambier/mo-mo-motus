@@ -1,8 +1,20 @@
 <template>
-  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
-    <h1 class="m-4 text-3xl font-bold text-white">
-      MO-MO-MOTUS
-    </h1>
+  <div class="flex flex-col items-center pt-4 mx-auto w-full max-w-lg h-full">
+    <!-- Header -->
+    <div class="flex flex-row justify-between w-full text-white">
+      <div class="pl-2 w-8 text-xl">
+        <button
+          @click="isVisibleModalWelcome = true"
+          class="h-fit">
+          <IconQuestion />
+        </button>
+      </div>
+      <h1 class="flex-1 m-4 text-3xl font-bold text-center">
+        MO-MO-MOTUS
+      </h1>
+      <div class="w-8" />
+    </div>
+
     <!-- Grid container -->
     <div class="flex flex-1 justify-center w-full">
       <!-- Grid -->
@@ -53,6 +65,8 @@ import {
   getConfirmedWords as getsavedWords,
   saveConfirmedWords,
 } from '@/composables/storage'
+import IconQuestion from '~icons/ph/question'
+import { isVisibleModalWelcome } from '@/composables/modal-manager'
 
 const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {
