@@ -9,12 +9,9 @@ export enum LetterPosition {
   Misplaced,
 }
 
-export function getRandomWord(): string {
-  return words[Math.floor(Math.random() * words.length)]
-}
-
 export function getWordForToday(): string {
-  return words[Math.floor(random() * words.length)]
+  const prng = initPRNG()
+  return words[Math.floor(prng() * words.length)]
 }
 
 export function doesWordExist(word: string): boolean {

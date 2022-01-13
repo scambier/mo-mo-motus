@@ -1,11 +1,11 @@
-import { getCurrentDate } from '@/utils'
+import { getSessionId } from '@/utils'
 import { guesses } from './game-state'
 import { showToast } from './toast-manager'
 
 const prefix = 'wordle_'
 
 export function initSessionForToday(force = false): void {
-  const appSessionKey = getCurrentDate()
+  const appSessionKey = getSessionId()
 
   const hasSession = !!getItem('session')
   if (getItem('session') === appSessionKey && !force) {

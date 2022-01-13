@@ -1,12 +1,15 @@
-export function getCurrentDate(): string {
-  const tzoffset = new Date().getTimezoneOffset() * 60000 // offset in milliseconds
-  const localISOTime = new Date(Date.now() - tzoffset)
-    .toISOString()
-    .slice(0, -1)
-  return localISOTime.slice(0, 10)
+export function getCurrentDate(): Date {
+  return new Date(
+    new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' }),
+  )
 }
 
-export const random = initPRNG(getCurrentDate())
+export function getSessionId(): string {
+  const now = getCurrentDate()
+  const isMorning = now.getHours() < 12
+  const localISOTime = now.toISOString().slice(0, -1)
+  return localISOTime.slice(0, 10) + (isMorning ? '-0' : '-1')
+}
 
 function mulberry32(a: number) {
   return function () {
@@ -17,7 +20,8 @@ function mulberry32(a: number) {
   }
 }
 
-function initPRNG(seed: string): () => number {
+export function initPRNG(): ()=>number {
+  const seed = getSessionId()
   const hashed = hashStr(seed)
   return mulberry32(hashed)
 }
