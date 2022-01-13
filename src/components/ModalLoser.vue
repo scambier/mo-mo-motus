@@ -6,12 +6,12 @@
     <div class="mb-4 text-3xl">
       Le mot à trouver était
       <b><a
-        :href="`https://fr.wiktionary.org/wiki/${wordToFind}`"
+        :href="`https://fr.wiktionary.org/wiki/${wordToFindAccented}`"
         class="underline"
         target="_blank">{{ wordToFind.toUpperCase() }}</a></b>
     </div>
     <div class="mb-4">
-      Bien essayé quand même, vous retenterez votre chance dans [TODO]!
+      Bien essayé quand même, vous retenterez votre chance dans {{ getTimeBeforeNextWord() }} !
     </div>
 
     <div class="flex items-center">
@@ -22,8 +22,10 @@
     </div>
   </ModalBase>
 </template>
+
 <script setup lang="ts">
 import ModalBase from './ModalBase.vue'
-import { wordToFind } from '@/composables/game-state'
+import { getTimeBeforeNextWord, wordToFind, wordToFindAccented } from '@/composables/game-state'
 import ShareButton from './ShareButton.vue'
+
 </script>

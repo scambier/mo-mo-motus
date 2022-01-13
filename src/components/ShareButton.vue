@@ -28,7 +28,7 @@ function positionToEmoji(pos: LetterPosition): string {
   }
 }
 
-function getEmojis(): string {
+function getSharingText(): string {
   const emojis: string[] = []
   for (let i = 0; i < guesses.value.length; ++i) {
     const guess = guesses.value[i].word
@@ -40,14 +40,13 @@ function getEmojis(): string {
     )
   }
   const tries = `${countTotalGuesses.value}/6\n`
-  return `Mo-mo-motus\n${isWinner.value ? tries : ''}${emojis.join(
+  return `Mo-mo-motus\n${isWinner.value ? tries : ''}${emojis.filter(o => !!o).join(
     '\n',
   )}\nhttps://scambier.xyz/momomotus/`
 }
 
 function toClipboard(): void {
-  const share = getEmojis()
-  navigator.clipboard.writeText(getEmojis())
+  navigator.clipboard.writeText(getSharingText())
   showToast('Copié dans le presse-papier', 3000)
 }
 </script>
