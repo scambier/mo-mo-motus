@@ -20,13 +20,13 @@
 import { ref } from 'vue'
 import IconClose from '~icons/ph/x'
 
-const emits = defineEmits<{ (e: 'clickClose'): void }>()
+const emits = defineEmits<{ (e: 'onClose'): void }>()
 
 const isVisible = ref(true)
 
 function closeModal(): void {
   isVisible.value = false
-  emits('clickClose')
+  emits('onClose')
 }
 
 defineExpose({ closeModal })

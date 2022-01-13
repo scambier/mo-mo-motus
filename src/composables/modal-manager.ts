@@ -1,6 +1,5 @@
 import { getCurrentDate } from '@/utils'
 import differenceInDays from 'date-fns/differenceInDays'
-import getDay from 'date-fns/getDay'
 import { computed, ref } from 'vue'
 import { isGameover, isWinner } from './game-state'
 import { lastWelcomeDate, setLastWelcomeDate } from './storage'
