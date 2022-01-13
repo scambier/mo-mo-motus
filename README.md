@@ -12,6 +12,7 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 - [x] Ecran d'échec
 - [x] 🟩🟩🟩🟩🟩
 - [ ] 2 mots par jour
+- [ ] Ecran de crédits & explications
 - [ ] Animations
 
 
