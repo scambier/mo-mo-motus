@@ -23,6 +23,8 @@ module.exports = {
     'arrow-parens': ['error', 'as-needed'],
     'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     'func-call-spacing': 'off',
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/func-call-spacing': ['error'],
     '@typescript-eslint/explicit-function-return-type': [
       'error',
@@ -34,7 +36,6 @@ module.exports = {
         allowConciseArrowFunctionExpressionsStartingWithVoid: false,
       },
     ],
-    'no-unused-vars': ['warn'],
     'space-before-function-paren': [
       'error',
       {

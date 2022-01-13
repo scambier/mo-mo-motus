@@ -4,10 +4,10 @@
   "scripts": {
     "start": "pnpm run dev",
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "pnpm run lint && vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "vue": "^3.2.26",
