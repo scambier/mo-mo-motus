@@ -1,7 +1,7 @@
 <template>
   <button
     @click="toClipboard"
-    class="flex grow shrink-0 items-center p-2 bg-white/5 rounded border-2 border-green-500">
+    class="flex grow shrink-0 items-center p-2 bg-green-800 hover:bg-green-900 rounded">
     <IconShare class="mr-2" /> Partager
   </button>
 </template>
@@ -40,9 +40,9 @@ function getSharingText(): string {
     )
   }
   const tries = `${countTotalGuesses.value}/6\n`
-  return `Mo-mo-motus\n${isWinner.value ? tries : ''}${emojis.filter(o => !!o).join(
-    '\n',
-  )}\nhttps://scambier.xyz/momomotus/`
+  return `Mo-mo-motus\n${isWinner.value ? tries : ''}${emojis
+    .filter(o => !!o)
+    .join('\n')}\nhttps://scambier.xyz/momomotus/`
 }
 
 function toClipboard(): void {
