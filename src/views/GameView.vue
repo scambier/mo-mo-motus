@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center pt-4 mx-auto w-full max-w-lg h-full">
     <!-- Header -->
-    <div class="flex flex-row justify-between w-full text-white">
+    <div class="flex flex-row justify-between w-full">
       <div class="pl-2 w-8 text-xl">
         <button
           @click="isVisibleModalWelcome = true"
@@ -24,14 +24,17 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-2xl font-bold uppercase border-2"
+            class="h-[100%] text-3xl font-bold uppercase border-2"
             :class="{
-              'bg-green-500 text-black':
+              'bg-green-dimmed border-green-dimmed ':
                 guesses[y].confirmed &&
                 letterValidity(getLetter(y, x), x) === LetterPosition.Perfect,
-              'bg-yellow-500 text-black':
+              'bg-yellow-dimmed border-yellow-dimmed ':
                 guesses[y].confirmed &&
                 letterValidity(getLetter(y, x), x) === LetterPosition.Misplaced,
+              'bg-slate-700 border-slate-700 ':
+                guesses[y].confirmed &&
+                letterValidity(getLetter(y, x), x) === LetterPosition.Invalid,
             }">
             <span v-html="getLetter(y, x)" />
           </LetterBox>
@@ -41,7 +44,7 @@
 
     <!-- Keyboard -->
     <VisualKeyboard
-      class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 md:mb-8"
+      class="grow-0 shrink-0 px-1 w-full h-48 md:mb-16"
       @input="letter => pressLetter(letter)"
       @enter="pressEnter"
       @backspace="pressBackspace"
@@ -51,7 +54,7 @@
 
 <script setup lang="ts">
 import { computed, ref, watchEffect, onMounted, onUnmounted } from 'vue'
-import LetterBox from '@/components/LetterBox.vue'
+import LetterBox from '@/components/common/LetterBox.vue'
 import {
   doesWordExist,
   guesses,

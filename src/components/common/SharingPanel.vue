@@ -1,9 +1,14 @@
 <template>
-  <button
-    @click="toClipboard"
-    class="flex grow shrink-0 items-center p-2 bg-green-800 hover:bg-green-900 rounded">
-    <IconShare class="mr-2" /> Partager
-  </button>
+  <div class="flex flex-col items-center">
+    <ButtonGreen @click="toClipboard">
+      <IconShare class="mr-2" /> Partager votre score
+    </ButtonGreen>
+    <div class="p-2 mt-2">
+      <div
+        class="p-2 mb-2 text-sm text-left rounded border-2 border-white/20"
+        v-html="getSharingText().replace(/(?:\r\n|\r|\n)/g, '<br>')" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -16,6 +21,7 @@ import {
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
 import IconShare from '~icons/ph/share-network'
+import ButtonGreen from './ButtonGreen.vue'
 
 function positionToEmoji(pos: LetterPosition): string {
   switch (pos) {

@@ -17,8 +17,6 @@ const toClean = [K_SESSION, K_WORDS]
  */
 export function cleanState(appSessionKey: string, force = false): boolean {
   const hasSession = !!getItem(K_SESSION)
-  console.log(getItem(K_SESSION))
-  console.log(appSessionKey)
 
   // Do nothing if the session id is unchanged
   if (getItem(K_SESSION) === appSessionKey && !force) {

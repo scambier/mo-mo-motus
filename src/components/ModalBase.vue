@@ -2,10 +2,10 @@
   <!-- Overlay -->
   <div
     v-if="isVisible"
-    class="flex absolute top-0 left-0 justify-center w-screen h-screen text-white bg-black/40">
+    class="flex absolute top-0 left-0 justify-center w-full h-full bg-black/40">
     <!-- Content -->
     <div
-      class="relative p-8 m-4 mt-16 h-fit text-lg text-center bg-slate-900 rounded-lg">
+      class="relative p-8 m-4 mt-16 min-w-[40%] h-fit text-lg text-center bg-slate-900 rounded-lg border-2 border-slate-600">
       <button
         class="absolute top-2 right-2 text-xl"
         @click="closeModal">
@@ -20,13 +20,13 @@
 import { ref } from 'vue'
 import IconClose from '~icons/ph/x'
 
-const emits = defineEmits<{ (e: 'onClose'): void }>()
+const emits = defineEmits<{ (e: 'close'): void }>()
 
 const isVisible = ref(true)
 
 function closeModal(): void {
   isVisible.value = false
-  emits('onClose')
+  emits('close')
 }
 
 defineExpose({ closeModal })

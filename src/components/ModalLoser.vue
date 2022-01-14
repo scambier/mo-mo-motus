@@ -3,7 +3,7 @@
     <div class="mb-4 text-4xl">
       Oh non 😭
     </div>
-    <div class="mb-4 text-3xl">
+    <div class="mb-4 text-xl">
       Le mot à trouver était
       <b><a
         :href="`https://fr.wiktionary.org/wiki/${wordToFindAccented}`"
@@ -11,21 +11,19 @@
         target="_blank">{{ wordToFind.toUpperCase() }}</a></b>
     </div>
     <div class="mb-4">
-      Bien essayé quand même, vous retenterez votre chance dans {{ getTimeBeforeNextWord() }} !
+      Bien essayé quand même, vous retenterez votre chance dans
+      {{ getTimeBeforeNextWord() }} !
     </div>
-
-    <div class="flex items-center">
-      <span class="grow-0 shrink mr-4 text-left">
-        En attendant, vous pouvez toujours montrer votre graphe à vos amis.
-      </span>
-      <ShareButton />
-    </div>
+    <SharingPanel />
   </ModalBase>
 </template>
 
 <script setup lang="ts">
 import ModalBase from './ModalBase.vue'
-import { getTimeBeforeNextWord, wordToFind, wordToFindAccented } from '@/composables/game-state'
-import ShareButton from './ShareButton.vue'
-
+import {
+  getTimeBeforeNextWord,
+  wordToFind,
+  wordToFindAccented,
+} from '@/composables/game-state'
+import SharingPanel from './common/SharingPanel.vue'
 </script>

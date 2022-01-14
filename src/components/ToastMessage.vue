@@ -2,7 +2,7 @@
   <Transition>
     <div
       v-if="toastVisible"
-      class="fixed inset-x-0 top-4 p-2 mx-auto w-max text-center bg-white rounded"
+      class="fixed inset-x-0 top-4 p-3 mx-auto w-max text-center bg-slate-800 rounded"
       v-html="toastMessage" />
   </Transition>
 </template>

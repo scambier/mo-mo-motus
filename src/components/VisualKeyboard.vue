@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex flex-col">
     <!-- Row -->
     <div
       v-for="(line, i) in keyboard"
@@ -13,7 +13,7 @@
         <LetterBox
           is="button"
           @click="emit('input', letter)"
-          class="uppercase bg-gray-600"
+          class="basis-[10%] uppercase bg-slate-600 hover:bg-slate-700"
           :class="{ 'text-gray-400 bg-black': greyedOut?.has(letter) }">
           {{ letter }}
         </LetterBox>
@@ -24,7 +24,7 @@
           is="button"
           @click="emit('backspace')"
           title="Effacer"
-          class="bg-gray-600 ">
+          class="basis-[calc(20%+5px)] bg-slate-600 hover:bg-slate-700">
           <IconBackspace class="w-8 h-8" />
         </LetterBox>
 
@@ -34,7 +34,7 @@
           is="button"
           @click="emit('enter')"
           title="Entrée"
-          class="flex flex-col bg-gray-600">
+          class="flex basis-[calc(20%+5px)] flex-col bg-slate-600 hover:bg-slate-700">
           <IconReturn class="w-8 h-8" />
         </LetterBox>
       </template>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import LetterBox from './LetterBox.vue'
+import LetterBox from './common/LetterBox.vue'
 import IconBackspace from '~icons/ph/backspace'
 import IconReturn from '~icons/ph/key-return'
 
