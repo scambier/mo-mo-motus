@@ -3,7 +3,7 @@ import './index.css'
 
 import App from './App.vue'
 import router from './router'
-import { initSessionForToday } from './composables/storage'
+import { initSessionForToday } from './composables/game-state'
 
 const app = createApp(App)
 

@@ -1,18 +1,33 @@
 import { WordInput } from '@/types'
-import { getCurrentDate, initPRNG, normalizeWord } from '@/utils'
+import { getCurrentDate, getSessionId, initPRNG, normalizeWord } from '@/utils'
 import { computed, ref } from 'vue'
 import words from '@/words-list'
+import acceptedGuesses from '@/guesses-list'
 import addDays from 'date-fns/addDays'
 import setMinutes from 'date-fns/setMinutes'
 import setHours from 'date-fns/setHours'
 import differenceInMinutes from 'date-fns/differenceInMinutes'
 import differenceInHours from 'date-fns/differenceInHours'
 import addHours from 'date-fns/addHours'
+import * as storage from '@/storage'
+import { showToast } from './toast-manager'
 
 export enum LetterPosition {
   Invalid = 0,
   Perfect,
   Misplaced,
+}
+
+export function initSessionForToday(forceClean = false): void {
+  const appSessionKey = getSessionId()
+
+  // Clean the stored state if a new word is available
+  const newLexicon = storage.checkIfNewLexicon()
+  const newSession = storage.cleanState(appSessionKey, forceClean || newLexicon)
+
+  if (newSession || newLexicon) {
+    showToast('Un nouveau mot à deviner a été choisi.', 5000)
+  }
 }
 
 export function getWordForToday(): string {

@@ -9,7 +9,6 @@
       <template
         v-for="(letter, j) in line"
         :key="`key-${i}`">
-
         <!-- Letter -->
         <LetterBox
           is="button"
@@ -19,11 +18,11 @@
           {{ letter }}
         </LetterBox>
 
-        <!-- Delete -->
+        <!-- Backspace -->
         <LetterBox
-          v-if="i === 0 && j === line.length - 1"
+          v-if="i === 2 && j === line.length - 1"
           is="button"
-          @click="emit('delete')"
+          @click="emit('backspace')"
           title="Effacer"
           class="bg-gray-600 ">
           <IconBackspace class="w-8 h-8" />
@@ -38,7 +37,6 @@
           class="flex flex-col bg-gray-600">
           <IconReturn class="w-8 h-8" />
         </LetterBox>
-
       </template>
     </div>
   </div>
@@ -51,7 +49,7 @@ import IconReturn from '~icons/ph/key-return'
 
 const emit = defineEmits<{
   (e: 'enter'): void
-  (e: 'delete'): void
+  (e: 'backspace'): void
   (e: 'input', letter: string): void
 }>()
 

@@ -2,6 +2,8 @@
 
 La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 
+Un nouveau mot est choisi chaque jour à midi et minuit
+
 ## TODO
 
 - [x] Vérifier que le mot existe avant de le confirmer
@@ -13,14 +15,14 @@ La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 - [x] 🟩🟩🟩🟩🟩
 - [x] 2 mots par jour
 - [x] Ecran de crédits & explications
-- [ ] Reset en cas de changement de lexique
+- [x] Reset en cas de changement de lexique
 - [ ] Animations
 
 
 ## Credits / références
 
 - Le Wordle original: https://www.powerlanguage.co.uk/wordle/
-- Lexique : http://www.3zsoftware.com/fr/listes.php
+- Lexiques : http://www.3zsoftware.com/fr/listes.php https://www.freelang.com/dictionnaire/dic-francais.php https://grammalecte.net/download.php?prj=fr
 - Développé avec VueJS et TailwindCSS
 
 

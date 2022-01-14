@@ -1,3 +1,5 @@
+import words from './words-list'
+
 export function getCurrentDate(): Date {
   return new Date(
     new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' }),
@@ -31,7 +33,7 @@ export function initPRNG(): () => number {
  * @param val
  * @returns
  */
-function hashStr(val: string): number {
+export function hashStr(val: string): number {
   let hash = 0
   if (val.length === 0) {
     return 0
@@ -44,5 +46,9 @@ function hashStr(val: string): number {
 }
 
 export function normalizeWord(word: string): string {
-  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+}
+
+export function getLexiconHash(): string {
+  return btoa(words.join(''))
 }

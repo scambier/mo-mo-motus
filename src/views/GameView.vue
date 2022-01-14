@@ -44,7 +44,7 @@
       class="grow-0 shrink-0 px-1 m-2 mb-3 w-full h-48 md:mb-8"
       @input="letter => pressLetter(letter)"
       @enter="pressEnter"
-      @delete="pressBackspace"
+      @backspace="pressBackspace"
       :greyed-out="invalidLetters" />
   </div>
 </template>
@@ -64,7 +64,7 @@ import { showToast } from '@/composables/toast-manager'
 import {
   getConfirmedWords as getsavedWords,
   saveConfirmedWords,
-} from '@/composables/storage'
+} from '@/storage'
 import IconQuestion from '~icons/ph/question'
 import { isVisibleModalWelcome } from '@/composables/modal-manager'
 
