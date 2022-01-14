@@ -1,5 +1,7 @@
 # Wordle francophone
 
+[Jouez ici !](https://scambier.xyz/momomotus/)
+
 La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
 
 Un nouveau mot est choisi chaque jour à midi et minuit
@@ -26,3 +28,4 @@ Un nouveau mot est choisi chaque jour à midi et minuit
 - Développé avec VueJS et TailwindCSS
 
 
+License GPL-3
