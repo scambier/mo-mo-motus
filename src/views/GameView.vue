@@ -78,7 +78,7 @@ watchEffect(() => {
  */
 function onSizeChange(): void {
   if (grid.value) {
-    grid.value.style.height = (window.innerWidth / 5) * 6 + 'px'
+    grid.value.style.height = window.innerWidth * 0.8 + 'px'
   }
 }
 
