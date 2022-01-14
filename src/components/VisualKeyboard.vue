@@ -9,15 +9,6 @@
       <template
         v-for="(letter, j) in line"
         :key="`key-${i}`">
-        <!-- Enter -->
-        <LetterBox
-          v-if="i === 2 && j === 0"
-          is="button"
-          @click="emit('enter')"
-          title="Entrée"
-          class="flex flex-col bg-gray-600">
-          <IconReturn class="w-8 h-8" />
-        </LetterBox>
 
         <!-- Letter -->
         <LetterBox
@@ -30,13 +21,24 @@
 
         <!-- Delete -->
         <LetterBox
-          v-if="i === 2 && j === line.length - 1"
+          v-if="i === 0 && j === line.length - 1"
           is="button"
           @click="emit('delete')"
           title="Effacer"
-          class="bg-gray-600">
+          class="bg-gray-600 ">
           <IconBackspace class="w-8 h-8" />
         </LetterBox>
+
+        <!-- Enter -->
+        <LetterBox
+          v-if="i === 2 && j === line.length - 1"
+          is="button"
+          @click="emit('enter')"
+          title="Entrée"
+          class="flex flex-col bg-gray-600">
+          <IconReturn class="w-8 h-8" />
+        </LetterBox>
+
       </template>
     </div>
   </div>
