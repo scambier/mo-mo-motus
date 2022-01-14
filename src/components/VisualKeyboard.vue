@@ -35,7 +35,7 @@
           @click="emit('delete')"
           title="Effacer"
           class="bg-gray-600">
-          <IconBackspace class="w-6 h-6" />
+          <IconBackspace class="w-8 h-8" />
         </LetterBox>
       </template>
     </div>
@@ -44,8 +44,8 @@
 
 <script setup lang="ts">
 import LetterBox from './LetterBox.vue'
-import IconBackspace from '~icons/ph/arrow-left'
-import IconReturn from '~icons/ph/arrow-elbow-down-left'
+import IconBackspace from '~icons/ph/backspace'
+import IconReturn from '~icons/ph/key-return'
 
 const emit = defineEmits<{
   (e: 'enter'): void
