@@ -21,7 +21,7 @@ export function getWordForToday(): string {
 }
 
 export function doesWordExist(word: string): boolean {
-  return words.map(normalizeWord).includes(word)
+  return acceptedGuesses.map(normalizeWord).includes(word)
 }
 
 export function letterValidity(letter: string, index: number): LetterPosition {
