@@ -20,7 +20,7 @@ function mulberry32(a: number) {
   }
 }
 
-export function initPRNG(): ()=>number {
+export function initPRNG(): () => number {
   const seed = getSessionId()
   const hashed = hashStr(seed)
   return mulberry32(hashed)
@@ -41,4 +41,8 @@ function hashStr(val: string): number {
     hash |= 0
   }
   return hash
+}
+
+export function normalizeWord(word: string): string {
+  return word.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }

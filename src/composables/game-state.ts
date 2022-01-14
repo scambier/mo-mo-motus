@@ -1,5 +1,5 @@
 import { WordInput } from '@/types'
-import { getCurrentDate, initPRNG } from '@/utils'
+import { getCurrentDate, initPRNG, normalizeWord } from '@/utils'
 import { computed, ref } from 'vue'
 import words from '@/words-list'
 import addDays from 'date-fns/addDays'
@@ -21,7 +21,7 @@ export function getWordForToday(): string {
 }
 
 export function doesWordExist(word: string): boolean {
-  return words.includes(word)
+  return words.map(normalizeWord).includes(word)
 }
 
 export function letterValidity(letter: string, index: number): LetterPosition {
@@ -35,8 +35,6 @@ export function letterValidity(letter: string, index: number): LetterPosition {
 }
 
 export const wordToFindAccented = getWordForToday()
-  .normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '')
 export const wordToFind = wordToFindAccented
   .normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
