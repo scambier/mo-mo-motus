@@ -8,9 +8,12 @@ export function getCurrentDate(): Date {
 
 export function getSessionId(): string {
   const now = getCurrentDate()
-  const isMorning = now.getHours() < 12
   const localISOTime = now.toISOString().slice(0, -1)
-  return localISOTime.slice(0, 10) + (isMorning ? '-0' : '-1')
+  return localISOTime.slice(0, 10) + (isMorning(now) ? '-0' : '-1')
+}
+
+export function isMorning(date: Date): boolean {
+  return date.getHours() < 12
 }
 
 function mulberry32(a: number) {
@@ -46,7 +49,10 @@ export function hashStr(val: string): number {
 }
 
 export function normalizeWord(word: string): string {
-  return word.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  return word
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
 }
 
 export function getLexiconHash(): string {

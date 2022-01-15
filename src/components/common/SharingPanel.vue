@@ -47,10 +47,10 @@ function getSharingText(): string {
         .join(''),
     )
   }
-  const tries = `✔️ ${countTotalGuesses.value}/6\n`
-  return `Mo-mo-motus n°${numberOfGamesSinceStart()} ${isWinner.value ? tries : '❌'}${emojis
+  const tries = `✔️ ${countTotalGuesses.value}/6`
+  return `Mo-mo-motus n°${numberOfGamesSinceStart()}\n${emojis
     .filter(o => !!o)
-    .join('\n')}\nhttps://scambier.xyz/momomotus/`
+    .join('\n')}${isWinner.value ? tries : '❌'}\nhttps://scambier.xyz/momomotus/`
 }
 
 function toClipboard(): void {

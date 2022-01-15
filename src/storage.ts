@@ -44,7 +44,7 @@ export function checkIfNewLexicon(): boolean {
   const hash = hashStr(words.join(''))
   const oldHash = getItem(K_LEXICON) ?? ''
   setItem(K_LEXICON, hash.toString())
-  return hash.toString() !== oldHash
+  return !!oldHash && hash.toString() !== oldHash
 }
 
 export function saveConfirmedWords(words: string[]): void {

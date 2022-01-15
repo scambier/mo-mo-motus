@@ -12,7 +12,7 @@
     </div>
     <div class="mb-4">
       Bien essayé quand même, vous retenterez votre chance dans
-      {{ getTimeBeforeNextWord() }} !
+      <span v-html="getTimeBeforeNextWord()" /> !
     </div>
     <SharingPanel />
   </ModalBase>
