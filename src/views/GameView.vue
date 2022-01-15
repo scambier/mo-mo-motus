@@ -1,19 +1,7 @@
 <template>
   <div class="flex flex-col items-center pt-4 mx-auto w-full max-w-lg h-full">
     <!-- Header -->
-    <div class="flex flex-row justify-between w-full">
-      <div class="pl-2 w-8 text-xl">
-        <button
-          @click="isVisibleModalWelcome = true"
-          class="h-fit">
-          <IconQuestion />
-        </button>
-      </div>
-      <h1 class="flex-1 m-4 text-3xl font-bold text-center">
-        MO-MO-MOTUS
-      </h1>
-      <div class="w-8" />
-    </div>
+    <SiteHeader />
 
     <!-- Grid container -->
     <div class="flex flex-1 justify-center w-full">
@@ -55,6 +43,8 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import LetterBox from '@/components/common/LetterBox.vue'
+import SiteHeader from '@/components/SiteHeader.vue'
+import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import {
   doesWordExist,
   guesses,
@@ -62,14 +52,11 @@ import {
   LetterPosition,
   letterValidity,
 } from '@/composables/game-state'
-import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import { showToast } from '@/composables/toast-manager'
 import {
   getConfirmedWords as getsavedWords,
   saveConfirmedWords,
 } from '@/storage'
-import IconQuestion from '~icons/ph/question'
-import { isVisibleModalWelcome } from '@/composables/modal-manager'
 
 const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {
