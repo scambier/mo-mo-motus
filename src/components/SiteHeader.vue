@@ -1,5 +1,6 @@
 <template>
-  <div class="flex flex-row justify-between w-full border-b border-slate-400">
+  <div
+    class="flex flex-row justify-between items-end py-2 mb-2 w-full border-b border-slate-400">
     <div class="pl-2 w-8 text-xl">
       <button
         @click="isVisibleModalWelcome = true"
@@ -12,6 +13,7 @@
     </h1>
     <div class="pl-2 w-8 text-xl">
       <button
+        v-if="false"
         @click="isVisibleModalStats = true"
         class="h-fit">
         <IconChart />
@@ -21,7 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { isVisibleModalStats, isVisibleModalWelcome } from '@/composables/modal-manager'
+import {
+  isVisibleModalStats,
+  isVisibleModalWelcome,
+} from '@/composables/modal-manager'
 import IconQuestion from '~icons/ph/question'
 import IconChart from '~icons/ph/chart-bar'
 </script>

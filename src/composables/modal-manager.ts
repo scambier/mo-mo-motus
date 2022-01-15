@@ -6,7 +6,9 @@ import { lastWelcomeDate, setLastWelcomeDate } from '../storage'
 
 export const isVisibleModalLoser = ref(false)
 export const isVisibleModalWinner = ref(false)
+export const isVisibleModalStats = ref(false)
 
+// Automatically toggle winner/loser modals when game is over
 watchEffect(() => {
   isVisibleModalWinner.value = isGameover.value && isWinner.value
   isVisibleModalLoser.value = isGameover.value && !isWinner.value
