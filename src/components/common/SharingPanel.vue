@@ -20,6 +20,8 @@ import {
   letterValidity,
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
+import { isMorning } from '@/utils'
+import differenceInDays from 'date-fns/differenceInDays'
 import IconShare from '~icons/ph/share-network'
 import ButtonGreen from './ButtonGreen.vue'
 
@@ -45,8 +47,8 @@ function getSharingText(): string {
         .join(''),
     )
   }
-  const tries = `${countTotalGuesses.value}/6\n`
-  return `Mo-mo-motus\n${isWinner.value ? tries : ''}${emojis
+  const tries = `✔️ ${countTotalGuesses.value}/6\n`
+  return `Mo-mo-motus n°${numberOfGamesSinceStart()} ${isWinner.value ? tries : '❌'}${emojis
     .filter(o => !!o)
     .join('\n')}\nhttps://scambier.xyz/momomotus/`
 }
@@ -54,5 +56,12 @@ function getSharingText(): string {
 function toClipboard(): void {
   navigator.clipboard.writeText(getSharingText())
   showToast('Copié dans le presse-papier', 3000)
+}
+
+function numberOfGamesSinceStart(): number {
+  const startDate = new Date(import.meta.env.VITE_STARTING_DATE as string)
+  const now = new Date()
+  console.log(startDate)
+  return differenceInDays(now, startDate) * 2 + (isMorning(now) ? 0 : 1)
 }
 </script>

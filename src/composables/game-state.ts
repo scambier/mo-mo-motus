@@ -85,5 +85,5 @@ export function getTimeBeforeNextWord(): string {
   const next = midDay > now ? midDay : tomorrow
   const h = differenceInHours(next, now)
   const m = differenceInMinutes(next, addHours(now, h))
-  return `${h}h${m}m`
+  return `${h}h&nbsp;${m}m`
 }
