@@ -36,9 +36,18 @@ export function getWordForToday(): string {
 }
 
 export function doesWordExist(word: string): boolean {
-  return acceptedGuesses.map(normalizeWord).includes(word)
+  return (
+    words.map(normalizeWord).includes(word) ||
+    acceptedGuesses.map(normalizeWord).includes(word)
+  )
 }
 
+/**
+ * @deprecated Replace with getLettersColors
+ * @param letter
+ * @param index
+ * @returns
+ */
 export function letterValidity(letter: string, index: number): LetterPosition {
   if (wordToFind[index] === letter) {
     return LetterPosition.Perfect
@@ -47,6 +56,37 @@ export function letterValidity(letter: string, index: number): LetterPosition {
     return LetterPosition.Misplaced
   }
   return LetterPosition.Invalid
+}
+
+export function getLettersColors(
+  guess: string,
+  word = wordToFind,
+): LetterPosition[] {
+  const wordLetters = word.split('')
+  const guessLetters = guess.split('')
+  const colors: LetterPosition[] = [0, 0, 0, 0, 0]
+
+  // First, check green letters
+  for (let i = 0; i < guessLetters.length; ++i) {
+    const letter = guessLetters[i]
+
+    if (letter === wordLetters[i]) {
+      colors[i] = LetterPosition.Perfect
+      // Remove checked letters to avoid showing 2 yellows for a single letter
+      wordLetters[i] = '_'
+      guessLetters[guessLetters.findIndex(l => l === letter)] = ''
+    }
+  }
+  for (let i = 0; i < guessLetters.length; ++i) {
+    const letter = guessLetters[i]
+    if (wordLetters.includes(letter)) {
+      colors[i] = LetterPosition.Misplaced
+      // Remove checked letters to avoid showing 2 yellows for a single letter
+      guessLetters[guessLetters.findIndex(o => o === letter)] = ''
+      wordLetters[wordLetters.findIndex(o => o === letter)] = '_'
+    }
+  }
+  return colors
 }
 
 export const wordToFindAccented = getWordForToday()

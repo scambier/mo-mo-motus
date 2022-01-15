@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center pt-4 mx-auto w-full max-w-lg h-full">
+  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
     <!-- Header -->
     <SiteHeader />
 
@@ -12,17 +12,17 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-3xl font-bold uppercase border-2"
+            class="h-[100%] text-3xl font-bold uppercase border"
             :class="{
               'bg-green-dimmed border-green-dimmed ':
                 guesses[y].confirmed &&
-                letterValidity(getLetter(y, x), x) === LetterPosition.Perfect,
+                getLettersColors(guesses[y].word)[x] === LetterPosition.Perfect,
               'bg-yellow-dimmed border-yellow-dimmed ':
                 guesses[y].confirmed &&
-                letterValidity(getLetter(y, x), x) === LetterPosition.Misplaced,
+                getLettersColors(guesses[y].word)[x] === LetterPosition.Misplaced,
               'bg-slate-700 border-slate-700 ':
                 guesses[y].confirmed &&
-                letterValidity(getLetter(y, x), x) === LetterPosition.Invalid,
+                getLettersColors(guesses[y].word)[x] === LetterPosition.Invalid,
             }">
             <span v-html="getLetter(y, x)" />
           </LetterBox>
@@ -47,6 +47,7 @@ import SiteHeader from '@/components/SiteHeader.vue'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
 import {
   doesWordExist,
+  getLettersColors,
   guesses,
   isGameover,
   LetterPosition,

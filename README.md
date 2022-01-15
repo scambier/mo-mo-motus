@@ -1,23 +1,15 @@
-# Wordle francophone
+# MO-MO-MOTUS
 
-[Jouez ici !](https://scambier.xyz/momomotus/)
+<small>Un clone francophone de [Wordle](https://www.powerlanguage.co.uk/wordle/)</small>
 
-La version MO-MO-MOTUS de https://www.powerlanguage.co.uk/wordle/
+**[Jouez en ligne !](https://scambier.xyz/momomotus/)**
 
 Un nouveau mot est choisi chaque jour à midi et minuit
 
 ## TODO
 
-- [x] Vérifier que le mot existe avant de le confirmer
-- [x] Sauver les mots confirmés dans le localStorage
-- [x] Ré-appliquer les mots confirmés après un refresh
-- [x] Support clavier
-- [x] Ecran de victoire
-- [x] Ecran d'échec
-- [x] 🟩🟩🟩🟩🟩
-- [x] 2 mots par jour
-- [x] Ecran de crédits & explications
-- [x] Reset en cas de changement de lexique
+- [ ] Refresh auto à 12h et minuit
+- [ ] Stats
 - [ ] Animations
 
 
