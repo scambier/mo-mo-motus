@@ -1,10 +1,8 @@
 <template>
-  <ModalBase
-    ref="base"
-    @close="isVisibleModalWelcome = false">
+  <ModalBase @close="isVisibleModalWelcome = false">
     <p class="mb-4">
-      Chaque jour, à minuit et à midi, un nouveau mot de 5 lettres est choisi au
-      hasard.<br>Il s'agit du même mot, pour tous les joueurs.
+      Chaque jour, à midi et minuit, un nouveau mot de 5 lettres est choisi au
+      hasard.<br><strong>Il s'agit du même mot, pour tous les joueurs.</strong>
     </p>
     <p class="mb-4">
       Vous avez 6 essais pour trouver le mot en question.<br>
@@ -13,7 +11,7 @@
       Une lettre qui n'est pas dans le mot reste ⬛.
     </p>
     <div>
-      <ButtonGreen @click="base?.closeModal()">
+      <ButtonGreen @click="isVisibleModalWelcome = false">
         C'est parti !
       </ButtonGreen>
     </div>
@@ -32,9 +30,6 @@
 
 <script setup lang="ts">
 import ModalBase from './ModalBase.vue'
-import { ref } from 'vue'
 import { isVisibleModalWelcome } from '@/composables/modal-manager'
-import ButtonGreen from './common/ButtonGreen.vue'
-
-const base = ref<InstanceType<typeof ModalBase> | null>(null)
+import ButtonGreen from '@/components/common/ButtonGreen.vue'
 </script>

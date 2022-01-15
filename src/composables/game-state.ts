@@ -54,11 +54,11 @@ export const wordToFind = wordToFindAccented
   .normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
 
+export const isWinner = computed(() =>
+  guesses.value.some(o => o.confirmed && o.word === wordToFind),
+)
 export const isGameover = computed(
   () => isWinner.value || guesses.value.every(o => o.confirmed),
-)
-export const isWinner = computed(() =>
-  guesses.value.find(o => o.word === wordToFind && o.confirmed),
 )
 
 export const guesses = ref<WordInput[]>([

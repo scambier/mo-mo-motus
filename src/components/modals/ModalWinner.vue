@@ -1,7 +1,7 @@
 <template>
-  <ModalBase>
+  <ModalBase @close="isVisibleModalWinner = false">
     <div class="mb-4 text-4xl">
-      Oh non 😭
+      Bien joué 🎉
     </div>
     <div class="mb-4 text-xl">
       Le mot à trouver était
@@ -11,9 +11,10 @@
         target="_blank">{{ wordToFind.toUpperCase() }}</a></b>
     </div>
     <div class="mb-4">
-      Bien essayé quand même, vous retenterez votre chance dans
-      {{ getTimeBeforeNextWord() }} !
+      Rendez-vous dans <span v-html="getTimeBeforeNextWord()" /> pour le
+      prochain mot !
     </div>
+
     <SharingPanel />
   </ModalBase>
 </template>
@@ -25,5 +26,6 @@ import {
   wordToFind,
   wordToFindAccented,
 } from '@/composables/game-state'
-import SharingPanel from './common/SharingPanel.vue'
+import SharingPanel from '@/components/common/SharingPanel.vue'
+import { isVisibleModalWinner } from '@/composables/modal-manager'
 </script>

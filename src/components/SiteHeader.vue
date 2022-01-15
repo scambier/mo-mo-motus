@@ -12,8 +12,7 @@
     </h1>
     <div class="pl-2 w-8 text-xl">
       <button
-        v-if="false"
-        @click="isVisibleModalWelcome = true"
+        @click="isVisibleModalStats = true"
         class="h-fit">
         <IconChart />
       </button>
@@ -22,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { isVisibleModalWelcome } from '@/composables/modal-manager'
+import { isVisibleModalStats, isVisibleModalWelcome } from '@/composables/modal-manager'
 import IconQuestion from '~icons/ph/question'
 import IconChart from '~icons/ph/chart-bar'
 </script>

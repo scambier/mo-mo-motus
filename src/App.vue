@@ -1,14 +1,11 @@
 <template>
   <router-view />
   <Transition>
-    <ModalWelcome v-if="isVisibleModalWelcome" />
-  </Transition>
-  <Transition>
     <ModalLoser v-if="isVisibleModalLoser" />
+    <ModalWinner v-else-if="isVisibleModalWinner" />
+    <ModalWelcome v-else-if="isVisibleModalWelcome" />
   </Transition>
-  <Transition>
-    <ModalWinner v-if="isVisibleModalWinner" />
-  </Transition>
+
   <ToastMessage />
 </template>
 
@@ -23,11 +20,15 @@
   opacity: 0;
 }
 </style>
+
 <script setup lang="ts">
 import ToastMessage from './components/ToastMessage.vue'
-import ModalLoser from './components/ModalLoser.vue'
-import ModalWinner from './components/ModalWinner.vue'
-import ModalWelcome from './components/ModalWelcome.vue'
-import { isVisibleModalLoser, isVisibleModalWelcome, isVisibleModalWinner } from './composables/modal-manager'
-
+import ModalLoser from './components/modals/ModalLoser.vue'
+import ModalWinner from './components/modals/ModalWinner.vue'
+import ModalWelcome from './components/modals/ModalWelcome.vue'
+import {
+  isVisibleModalLoser,
+  isVisibleModalWelcome,
+  isVisibleModalWinner,
+} from './composables/modal-manager'
 </script>
