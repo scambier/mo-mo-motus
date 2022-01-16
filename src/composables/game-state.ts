@@ -74,7 +74,7 @@ export function getLettersColors(
       colors[i] = LetterPosition.Perfect
       // Remove checked letters to avoid showing 2 yellows for a single letter
       wordLetters[i] = '_'
-      guessLetters[guessLetters.findIndex(l => l === letter)] = ''
+      guessLetters[i] = ''
     }
   }
   for (let i = 0; i < guessLetters.length; ++i) {
@@ -82,8 +82,8 @@ export function getLettersColors(
     if (wordLetters.includes(letter)) {
       colors[i] = LetterPosition.Misplaced
       // Remove checked letters to avoid showing 2 yellows for a single letter
-      guessLetters[guessLetters.findIndex(o => o === letter)] = ''
       wordLetters[wordLetters.findIndex(o => o === letter)] = '_'
+      guessLetters[guessLetters.findIndex(o => o === letter)] = ''
     }
   }
   return colors
