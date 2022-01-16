@@ -8,9 +8,9 @@ Un nouveau mot est choisi chaque jour à midi et minuit
 
 ## TODO
 
-- [ ] Refresh auto à 12h et minuit
+- [x] Refresh auto à 12h et minuit
 - [ ] Stats
-- [ ] Animations
+- [x] Animations
 
 
 ## Credits / références
