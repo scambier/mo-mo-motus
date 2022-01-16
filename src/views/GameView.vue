@@ -62,6 +62,19 @@ const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {
   if (grid.value) onSizeChange()
 })
+
+const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
+
+const currentRowIndex = computed(() =>
+  currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
+)
+const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
+
+/**
+ * List of letters not in the word
+ */
+const invalidLetters = ref<Set<string>>(new Set())
+
 /**
  * Firefox shows issues with aspect-ratio.
  * This is a hack to make sure that the grid always looks good.
@@ -92,20 +105,6 @@ function onKeyPress(e: KeyboardEvent): void {
     pressBackspace()
   }
 }
-
-const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
-
-const currentRowIndex = computed(() =>
-  currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
-)
-const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
-
-/**
- * List of letters not in the word
- */
-const invalidLetters = ref<Set<string>>(new Set())
-
-const savedWords = getsavedWords()
 
 function pressLetter(letter: string): void {
   if (!currentGuess.value || isGameover.value) return
@@ -167,6 +166,7 @@ onMounted(() => {
   /**
    * Load saved words at startup
    */
+  const savedWords = loadConfirmedWords()
   for (let i = 0; i < savedWords.length; ++i) {
     guesses.value[i].word = savedWords[i]
     pressEnter()

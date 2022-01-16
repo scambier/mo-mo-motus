@@ -35,4 +35,25 @@ import {
   isVisibleModalWelcome,
   isVisibleModalWinner,
 } from './composables/modal-manager'
+import { hasSessionIdChanged } from './storage'
+
+onMounted(() => {
+  initSessionForToday()
+  window.addEventListener('focus', checkAndReset)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('focus', checkAndReset)
+})
+
+/**
+ * This will reset the game and empty the board,
+ * if a new puzzle has started
+ */
+function checkAndReset(): void {
+  if (hasSessionIdChanged()) {
+    initSessionForToday(true)
+    location.reload()
+  }
+}
 </script>

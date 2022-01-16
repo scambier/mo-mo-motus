@@ -15,7 +15,7 @@
           is="button"
           @click="emit('enter')"
           title="Entrée"
-          class="flex basis-[calc(20%+5px)] flex-col bg-slate-600 hover:bg-slate-700">
+          class="flex basis-[calc(20%+5px)] flex-col bg-slate-600 active:bg-slate-700">
           <IconReturn class="w-8 h-8" />
         </LetterBox>
 
@@ -23,7 +23,7 @@
         <LetterBox
           is="button"
           @click="emit('input', letter)"
-          class="basis-[10%] uppercase bg-slate-600 hover:bg-slate-700"
+          class="basis-[10%] uppercase bg-slate-600 active:bg-slate-700"
           :class="{ 'text-gray-400 bg-black': greyedOut?.has(letter) }">
           {{ letter }}
         </LetterBox>
@@ -34,7 +34,7 @@
           is="button"
           @click="emit('backspace')"
           title="Effacer"
-          class="basis-[calc(20%+5px)] bg-slate-600 hover:bg-slate-700">
+          class="basis-[calc(20%+5px)] bg-slate-600 active:bg-slate-700">
           <IconBackspace class="w-8 h-8" />
         </LetterBox>
       </template>

@@ -3,7 +3,7 @@ import words from '@/words-list'
 
 import { guesses, initSessionForToday } from './composables/game-state'
 
-const prefix = 'wordle_'
+const prefix = 'mts_'
 const K_SESSION = 'session'
 const K_WORDS = 'words'
 const K_WELCOME = 'lastWelcome'
@@ -25,11 +25,8 @@ export function cleanState(appSessionKey: string, force = false): boolean {
   }
 
   // Clear
-  for (let i = localStorage.length; i > 0; --i) {
-    const key = localStorage.key(i)
-    if (key?.startsWith(prefix) && toClean.some(k => key.includes(k))) {
-      localStorage.removeItem(key)
-    }
+  for (const k of toClean) {
+    localStorage.removeItem(prefix + k)
   }
 
   // Save the session key
@@ -52,7 +49,7 @@ export function saveConfirmedWords(words: string[]): void {
   setItem(K_WORDS, JSON.stringify(words))
 }
 
-export function getConfirmedWords(): string[] {
+export function loadConfirmedWords(): string[] {
   try {
     const words = getItem(K_WORDS)
     if (words) {
@@ -78,6 +75,10 @@ export const lastWelcomeDate: Date = (() => {
 
 export function setLastWelcomeDate(): void {
   setItem(K_WELCOME, getCurrentDate().toISOString())
+}
+
+export function hasSessionIdChanged(): boolean {
+  return !!getItem(K_SESSION) && getItem(K_SESSION) !== getSessionId()
 }
 
 /**/
