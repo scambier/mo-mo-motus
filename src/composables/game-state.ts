@@ -1,24 +1,26 @@
+import {
+  addDays,
+  addHours,
+  differenceInHours,
+  differenceInMinutes,
+  setHours,
+  setMinutes,
+} from 'date-fns'
+import { computed, ref } from 'vue'
+
+import acceptedGuesses from '@/guesses-list'
+import * as storage from '@/storage'
 import { WordInput } from '@/types'
 import {
   getCurrentDate,
   getSessionId,
   initPRNG,
-  isMorning,
   normalizeWord,
   numberOfHalfDays,
 } from '@/utils'
-import { computed, ref } from 'vue'
 import words from '@/words-list'
-import acceptedGuesses from '@/guesses-list'
-import addDays from 'date-fns/addDays'
-import setMinutes from 'date-fns/setMinutes'
-import setHours from 'date-fns/setHours'
-import differenceInMinutes from 'date-fns/differenceInMinutes'
-import differenceInHours from 'date-fns/differenceInHours'
-import addHours from 'date-fns/addHours'
-import * as storage from '@/storage'
+
 import { showToast } from './toast-manager'
-import differenceInDays from 'date-fns/differenceInDays'
 
 export enum LetterPosition {
   Invalid = 0,

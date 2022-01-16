@@ -22,6 +22,7 @@ import {
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
 import IconShare from '~icons/ph/share-network'
+
 import ButtonGreen from './ButtonGreen.vue'
 
 function positionToEmoji(pos: LetterPosition): string {

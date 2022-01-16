@@ -1,9 +1,10 @@
-import { createApp } from 'vue'
 import './index.css'
 
+import { createApp } from 'vue'
+
 import App from './App.vue'
-import router from './router'
 import { initSessionForToday } from './composables/game-state'
+import router from './router'
 
 const app = createApp(App)
 

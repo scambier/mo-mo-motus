@@ -4,7 +4,7 @@
   "scripts": {
     "start": "pnpm run dev",
     "dev": "vite",
-    "build": "pnpm run lint && vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "typecheck": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
@@ -29,6 +29,7 @@
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-tailwindcss": "^3.1.2",
     "eslint-plugin-vue": "^8.2.0",
     "postcss": "^8.4.5",

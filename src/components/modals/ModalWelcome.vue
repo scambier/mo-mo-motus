@@ -29,7 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import ModalBase from './ModalBase.vue'
-import { isVisibleModalWelcome } from '@/composables/modal-manager'
 import ButtonGreen from '@/components/common/ButtonGreen.vue'
+import { isVisibleModalWelcome } from '@/composables/modal-manager'
+
+import ModalBase from './ModalBase.vue'
 </script>

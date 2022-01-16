@@ -42,7 +42,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watchEffect, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+
 import LetterBox from '@/components/common/LetterBox.vue'
 import SiteHeader from '@/components/SiteHeader.vue'
 import VisualKeyboard from '@/components/VisualKeyboard.vue'
@@ -53,13 +54,9 @@ import {
   isGameover,
   LetterPosition,
   letterValidity,
-  numberOfGamesSinceStart,
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
-import {
-  getConfirmedWords as getsavedWords,
-  saveConfirmedWords,
-} from '@/storage'
+import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
 
 const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {

@@ -20,12 +20,13 @@
 </template>
 
 <script setup lang="ts">
-import ModalBase from './ModalBase.vue'
+import SharingPanel from '@/components/common/SharingPanel.vue'
 import {
   getTimeBeforeNextWord,
   wordToFind,
   wordToFindAccented,
 } from '@/composables/game-state'
-import SharingPanel from '@/components/common/SharingPanel.vue'
 import { isVisibleModalWinner } from '@/composables/modal-manager'
+
+import ModalBase from './ModalBase.vue'
 </script>

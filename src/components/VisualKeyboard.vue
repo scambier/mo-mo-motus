@@ -43,9 +43,10 @@
 </template>
 
 <script setup lang="ts">
-import LetterBox from './common/LetterBox.vue'
 import IconBackspace from '~icons/ph/backspace'
 import IconReturn from '~icons/ph/key-return'
+
+import LetterBox from './common/LetterBox.vue'
 
 const emit = defineEmits<{
   (e: 'enter'): void

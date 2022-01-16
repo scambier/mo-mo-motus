@@ -1,5 +1,6 @@
-import { getCurrentDate, hashStr } from '@/utils'
+import { getCurrentDate, getSessionId, hashStr } from '@/utils'
 import words from '@/words-list'
+
 import { guesses, initSessionForToday } from './composables/game-state'
 
 const prefix = 'wordle_'

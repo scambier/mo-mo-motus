@@ -1,8 +1,10 @@
-import { getCurrentDate } from '@/utils'
-import differenceInDays from 'date-fns/differenceInDays'
+import { differenceInDays } from 'date-fns'
 import { ref, watchEffect } from 'vue'
-import { isGameover, isWinner } from './game-state'
+
+import { getCurrentDate } from '@/utils'
+
 import { lastWelcomeDate, setLastWelcomeDate } from '../storage'
+import { isGameover, isWinner } from './game-state'
 
 export const isVisibleModalLoser = ref(false)
 export const isVisibleModalWinner = ref(false)

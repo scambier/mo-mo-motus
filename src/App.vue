@@ -22,10 +22,14 @@
 </style>
 
 <script setup lang="ts">
-import ToastMessage from './components/ToastMessage.vue'
-import ModalLoser from './components/modals/ModalLoser.vue'
-import ModalWinner from './components/modals/ModalWinner.vue'
-import ModalWelcome from './components/modals/ModalWelcome.vue'
+import { onMounted, onUnmounted } from 'vue'
+
+import ModalLoser from '@/components/modals/ModalLoser.vue'
+import ModalWelcome from '@/components/modals/ModalWelcome.vue'
+import ModalWinner from '@/components/modals/ModalWinner.vue'
+import ToastMessage from '@/components/ToastMessage.vue'
+
+import { initSessionForToday } from './composables/game-state'
 import {
   isVisibleModalLoser,
   isVisibleModalWelcome,

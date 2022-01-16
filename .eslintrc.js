@@ -17,13 +17,15 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
-  plugins: ['vue', '@typescript-eslint', 'tailwindcss'],
+  plugins: ['vue', '@typescript-eslint', 'tailwindcss', 'simple-import-sort'],
   rules: {
     'comma-dangle': ['error', 'always-multiline'],
     'arrow-parens': ['error', 'as-needed'],
     'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     'func-call-spacing': 'off',
-    'no-unused-vars': 'off',
+    'no-unused-vars': ['off'],
+    'simple-import-sort/imports': 'warn',
+    'simple-import-sort/exports': 'warn',
     '@typescript-eslint/no-unused-vars': ['warn'],
     '@typescript-eslint/func-call-spacing': ['error'],
     '@typescript-eslint/explicit-function-return-type': [

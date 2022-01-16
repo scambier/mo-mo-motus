@@ -1,7 +1,5 @@
-import differenceInDays from 'date-fns/differenceInDays'
-import differenceInHours from 'date-fns/differenceInHours'
-import endOfDay from 'date-fns/endOfDay'
-import startOfDay from 'date-fns/startOfDay'
+import { differenceInHours, endOfDay, startOfDay } from 'date-fns'
+
 import words from './words-list'
 
 export function getCurrentDate(): Date {
