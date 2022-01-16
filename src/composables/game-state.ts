@@ -1,5 +1,12 @@
 import { WordInput } from '@/types'
-import { getCurrentDate, getSessionId, initPRNG, normalizeWord } from '@/utils'
+import {
+  getCurrentDate,
+  getSessionId,
+  initPRNG,
+  isMorning,
+  normalizeWord,
+  numberOfHalfDays,
+} from '@/utils'
 import { computed, ref } from 'vue'
 import words from '@/words-list'
 import acceptedGuesses from '@/guesses-list'
@@ -11,6 +18,7 @@ import differenceInHours from 'date-fns/differenceInHours'
 import addHours from 'date-fns/addHours'
 import * as storage from '@/storage'
 import { showToast } from './toast-manager'
+import differenceInDays from 'date-fns/differenceInDays'
 
 export enum LetterPosition {
   Invalid = 0,
@@ -126,4 +134,9 @@ export function getTimeBeforeNextWord(): string {
   const h = differenceInHours(next, now)
   const m = differenceInMinutes(next, addHours(now, h))
   return `${h}h&nbsp;${m}m`
+}
+
+export function numberOfGamesSinceStart(): number {
+  const startDate = new Date(import.meta.env.VITE_STARTING_DATE as string)
+  return numberOfHalfDays(startDate, new Date())
 }

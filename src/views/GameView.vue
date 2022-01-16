@@ -19,7 +19,8 @@
                 getLettersColors(guesses[y].word)[x] === LetterPosition.Perfect,
               'bg-yellow-dimmed border-yellow-dimmed ':
                 guesses[y].confirmed &&
-                getLettersColors(guesses[y].word)[x] === LetterPosition.Misplaced,
+                getLettersColors(guesses[y].word)[x] ===
+                LetterPosition.Misplaced,
               'bg-slate-700 border-slate-700 ':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === LetterPosition.Invalid,
@@ -52,6 +53,7 @@ import {
   isGameover,
   LetterPosition,
   letterValidity,
+  numberOfGamesSinceStart,
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
 import {
@@ -90,7 +92,6 @@ function onKeyPress(e: KeyboardEvent): void {
 
   // Backspace
   if (k === 'backspace') {
-    console.log('del')
     pressBackspace()
   }
 }

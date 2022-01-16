@@ -20,6 +20,9 @@
       </button>
     </div>
   </div>
+  <div>
+    <span>Puzzle n°{{ numberOfGamesSinceStart() }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,4 +32,5 @@ import {
 } from '@/composables/modal-manager'
 import IconQuestion from '~icons/ph/question'
 import IconChart from '~icons/ph/chart-bar'
+import { numberOfGamesSinceStart } from '@/composables/game-state'
 </script>

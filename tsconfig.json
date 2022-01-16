@@ -24,7 +24,7 @@
     ],
     "skipLibCheck": true,
     "types": [
-      "unplugin-icons/types/vue", "jest",
+      "unplugin-icons/types/vue"
     ]
   },
   "include": [

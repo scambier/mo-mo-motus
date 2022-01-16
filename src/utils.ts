@@ -1,3 +1,7 @@
+import differenceInDays from 'date-fns/differenceInDays'
+import differenceInHours from 'date-fns/differenceInHours'
+import endOfDay from 'date-fns/endOfDay'
+import startOfDay from 'date-fns/startOfDay'
 import words from './words-list'
 
 export function getCurrentDate(): Date {
@@ -14,6 +18,12 @@ export function getSessionId(): string {
 
 export function isMorning(date: Date): boolean {
   return date.getHours() < 12
+}
+
+export function numberOfHalfDays(from: Date, to: Date): number {
+  from = isMorning(from) ? startOfDay(from) : endOfDay(from)
+  to = isMorning(to) ? startOfDay(to) : endOfDay(to)
+  return Math.floor(differenceInHours(to, from) / 12)
 }
 
 function mulberry32(a: number) {

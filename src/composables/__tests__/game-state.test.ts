@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest'
 import { getLettersColors, LetterPosition } from '../game-state'
 
 describe('The game-state composable', () => {
