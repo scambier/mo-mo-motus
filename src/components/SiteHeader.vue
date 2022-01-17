@@ -9,11 +9,10 @@
       </button>
     </div>
     <h1 class="flex-1 text-3xl font-bold text-center">
-      MO-MO-MOTUS
+      MO-MO-MOTUS<span class="text-sm"> beta</span>
     </h1>
-    <div class="pl-2 w-8 text-xl">
+    <div class="pr-2 w-8 text-xl">
       <button
-        v-if="false"
         @click="isVisibleModalStats = true"
         class="h-fit">
         <IconChart />

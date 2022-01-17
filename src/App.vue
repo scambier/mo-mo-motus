@@ -1,9 +1,10 @@
 <template>
   <router-view />
   <Transition>
-    <ModalLoser v-if="isVisibleModalLoser" />
-    <ModalWinner v-else-if="isVisibleModalWinner" />
-    <ModalWelcome v-else-if="isVisibleModalWelcome" />
+    <ModalWelcome v-if="isVisibleModalWelcome" />
+  </Transition>
+  <Transition>
+    <ModalStats v-if="isVisibleModalStats" />
   </Transition>
 
   <ToastMessage />
@@ -24,16 +25,14 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue'
 
-import ModalLoser from '@/components/modals/ModalLoser.vue'
 import ModalWelcome from '@/components/modals/ModalWelcome.vue'
-import ModalWinner from '@/components/modals/ModalWinner.vue'
 import ToastMessage from '@/components/ToastMessage.vue'
 
+import ModalStats from './components/modals/ModalStats.vue'
 import { initSessionForToday } from './composables/game-state'
 import {
-  isVisibleModalLoser,
+  isVisibleModalStats,
   isVisibleModalWelcome,
-  isVisibleModalWinner,
 } from './composables/modal-manager'
 import { hasSessionIdChanged } from './storage'
 

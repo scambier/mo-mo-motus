@@ -3,9 +3,9 @@
     <ButtonGreen @click="toClipboard">
       <IconShare class="mr-2" /> Partager votre score
     </ButtonGreen>
-    <div class="p-2 mt-2">
+    <div class="p-2">
       <div
-        class="p-2 mb-2 text-sm text-left rounded border-2 border-white/20"
+        class="p-2 text-xs text-left rounded border-2 border-white/20"
         v-html="getSharingText().replace(/(?:\r\n|\r|\n)/g, '<br>')" />
     </div>
   </div>

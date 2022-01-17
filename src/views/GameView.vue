@@ -12,7 +12,7 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-3xl font-bold uppercase border transition duration-100"
+            class="h-[100%] text-3xl font-bold uppercase border transition duration-300"
             :class="{
               'bg-green-dimmed border-green-dimmed ':
                 guesses[y].confirmed &&
@@ -25,7 +25,7 @@
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === LetterPosition.Invalid,
             }"
-            :style="{transitionDelay: `${(x+1)*250}ms`}">
+            :style="{ transitionDelay: `${(x + 1) * 300}ms` }">
             <span v-html="getLetter(y, x)" />
           </LetterBox>
         </template>
@@ -56,6 +56,7 @@ import {
   LetterPosition,
   letterValidity,
 } from '@/composables/game-state'
+import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
 import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
 
@@ -145,6 +146,10 @@ function pressEnter(): void {
     if (letterValidity(word[i], i) === LetterPosition.Invalid) {
       invalidLetters.value.add(word[i])
     }
+  }
+
+  if (isGameover.value) {
+    saveScore()
   }
 }
 

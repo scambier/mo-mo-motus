@@ -6,7 +6,7 @@ import {
   setHours,
   setMinutes,
 } from 'date-fns'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
@@ -20,6 +20,7 @@ import {
 } from '@/utils'
 import words from '@/words-list'
 
+import { isVisibleModalStats } from './modal-manager'
 import { showToast } from './toast-manager'
 
 export enum LetterPosition {
@@ -27,6 +28,43 @@ export enum LetterPosition {
   Perfect,
   Misplaced,
 }
+
+export const wordToFindAccented = getWordForToday()
+export const wordToFind = wordToFindAccented
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+
+export const isWinner = computed(() =>
+  guesses.value.some(o => o.confirmed && o.word === wordToFind),
+)
+export const isGameover = computed(
+  () => isWinner.value || guesses.value.every(o => o.confirmed),
+)
+
+export const guesses = ref<WordInput[]>([
+  { word: '', confirmed: false },
+  { word: '', confirmed: false },
+  { word: '', confirmed: false },
+  { word: '', confirmed: false },
+  { word: '', confirmed: false },
+  { word: '', confirmed: false },
+])
+
+/**
+ * Number of tries it took to find the answer
+ */
+export const countTotalGuesses = computed<number>(() => {
+  return guesses.value.filter(o => !!o.word && o.confirmed).length
+})
+
+watch(isGameover, val => {
+  // Gameover switches to true
+  if (val) {
+    setTimeout(() => {
+      isVisibleModalStats.value = true
+    }, 300 * 7)
+  }
+})
 
 export function initSessionForToday(forceClean = false): void {
   const appSessionKey = getSessionId()
@@ -98,34 +136,6 @@ export function getLettersColors(
   }
   return colors
 }
-
-export const wordToFindAccented = getWordForToday()
-export const wordToFind = wordToFindAccented
-  .normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '')
-
-export const isWinner = computed(() =>
-  guesses.value.some(o => o.confirmed && o.word === wordToFind),
-)
-export const isGameover = computed(
-  () => isWinner.value || guesses.value.every(o => o.confirmed),
-)
-
-export const guesses = ref<WordInput[]>([
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-  { word: '', confirmed: false },
-])
-
-/**
- * Number of tries it took to find the answer
- */
-export const countTotalGuesses = computed<number>(() => {
-  return guesses.value.filter(o => !!o.word && o.confirmed).length
-})
 
 export function getTimeBeforeNextWord(): string {
   const now = getCurrentDate()

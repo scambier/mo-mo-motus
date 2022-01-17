@@ -1,14 +1,21 @@
+
 import { getCurrentDate, getSessionId, hashStr } from '@/utils'
 import words from '@/words-list'
 
 import { guesses, initSessionForToday } from './composables/game-state'
 
-const prefix = 'mts_'
-const K_SESSION = 'session'
-const K_WORDS = 'words'
-const K_WELCOME = 'lastWelcome'
-const K_LEXICON = 'lexiconHash'
+const K_SESSION = 'mts_session'
+const K_WORDS = 'mts_words'
+const K_WELCOME = 'mts_lastWelcome'
+const K_LEXICON = 'mts_lexiconHash'
 const toClean = [K_SESSION, K_WORDS]
+
+export function setItem(k: string, v: string): void {
+  return localStorage.setItem(k, v)
+}
+export function getItem(k: string): string | null {
+  return localStorage.getItem(k)
+}
 
 /**
  * Return true if there was an existing session, and it has been reset
@@ -26,7 +33,7 @@ export function cleanState(appSessionKey: string, force = false): boolean {
 
   // Clear
   for (const k of toClean) {
-    localStorage.removeItem(prefix + k)
+    localStorage.removeItem(k)
   }
 
   // Save the session key
@@ -74,19 +81,9 @@ export const lastWelcomeDate: Date = (() => {
 })()
 
 export function setLastWelcomeDate(): void {
-  setItem(K_WELCOME, getCurrentDate().toISOString())
+  localStorage.setItem(K_WELCOME, getCurrentDate().toISOString())
 }
 
 export function hasSessionIdChanged(): boolean {
   return !!getItem(K_SESSION) && getItem(K_SESSION) !== getSessionId()
-}
-
-/**/
-
-function setItem(key: string, val: string): void {
-  localStorage.setItem(prefix + key, val)
-}
-
-function getItem(key: string): string | null {
-  return localStorage.getItem(prefix + key)
 }
