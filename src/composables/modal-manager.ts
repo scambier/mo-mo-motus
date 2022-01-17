@@ -18,10 +18,10 @@ watchEffect(() => {
 
 const now = getCurrentDate()
 /**
- * Defaults to true if the welcome screen was not yet shown today
+ * Defaults to true if the welcome screen was not shown for at least 2 days
  */
 export const isVisibleModalWelcome = ref(
-  differenceInDays(now, lastWelcomeDate) > 0,
+  differenceInDays(now, lastWelcomeDate) >= 2,
 )
 if (isVisibleModalWelcome.value) {
   setLastWelcomeDate()
