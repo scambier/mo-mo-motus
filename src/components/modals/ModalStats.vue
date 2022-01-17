@@ -1,7 +1,7 @@
 <template>
   <ModalBase @close="isVisibleModalStats = false">
     <div class="mb-2 text-2xl">
-      Statistiques
+      {{ getRandomEmoji() }} Statistiques {{ getRandomEmoji() }}
     </div>
     <div class="flex justify-between">
       <div
@@ -21,7 +21,11 @@
         <span class="mr-1 w-6 text-center">{{ i ? i : '💀' }}</span>
         <div class="w-full">
           <div
-            class="min-w-fit max-w-full font-bold text-right bg-green-dimmed"
+            class="min-w-fit max-w-full font-bold text-right"
+            :class="{
+              'bg-green-dimmed': gamesOfScore(i) > 0,
+              'bg-gray-600': gamesOfScore(i) === 0,
+            }"
             :style="{ width: winPercentage(i) + '%' }">
             <span class="mx-1">{{ gamesOfScore(i) }}</span>
           </div>
@@ -50,11 +54,13 @@ import SharingPanel from '@/components/common/SharingPanel.vue'
 import {
   getTimeBeforeNextWord,
   isGameover,
+  isWinner,
   wordToFind,
   wordToFindAccented,
 } from '@/composables/game-state'
 import { isVisibleModalStats } from '@/composables/modal-manager'
 import { gameStats } from '@/composables/statistics'
+import { randomItem } from '@/utils'
 
 import ModalBase from './ModalBase.vue'
 const stats = gameStats.value
@@ -81,6 +87,11 @@ const statsTexts = ref([
   },
 ])
 
+function getRandomEmoji(): string {
+  if (isGameover.value && isWinner.value) { return randomItem(['🎉', '✨', '✔', '🙌']) }
+  return ''
+}
+
 function gamesOfScore(score: number): number {
   if (score === 0) {
     return games.filter(g => !g.won).length
@@ -89,6 +100,6 @@ function gamesOfScore(score: number): number {
 }
 
 function winPercentage(score: number): number {
-  return ((gamesOfScore(score) / games.length) || 0) * 100
+  return (gamesOfScore(score) / games.length || 0) * 100
 }
 </script>

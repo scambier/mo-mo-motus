@@ -70,3 +70,7 @@ export function getLexiconHash(): string {
 export function clamp(num: number, min: number, max: number): number {
   return Math.min(Math.max(num, min), max)
 }
+
+export function randomItem<T>(items: T[]): T {
+  return items[Math.floor(Math.random() * items.length)]
+}
