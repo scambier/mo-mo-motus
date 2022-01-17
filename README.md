@@ -4,20 +4,12 @@
 
 **[Jouez en ligne !](https://scambier.xyz/momomotus/)**
 
-Un nouveau mot est choisi chaque jour à midi et minuit
-
-## TODO
-
-- [x] Refresh auto à 12h et minuit
-- [ ] Stats
-- [x] Animations
-
+Un nouveau mot est choisi chaque jour à midi et minuit.
 
 ## Credits / références
 
 - Le Wordle original: https://www.powerlanguage.co.uk/wordle/
 - Lexiques : http://www.3zsoftware.com/fr/listes.php https://www.freelang.com/dictionnaire/dic-francais.php https://grammalecte.net/download.php?prj=fr
 - Développé avec VueJS et TailwindCSS
-
 
 License GPL-3
