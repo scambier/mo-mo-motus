@@ -14,11 +14,12 @@
 <script setup lang="ts">
 import {
   countTotalGuesses,
+  getLettersColors,
   guesses,
   isWinner,
   LetterPosition,
-  letterValidity,
   numberOfGamesSinceStart,
+  wordToFind,
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
 import IconShare from '~icons/ph/share-network'
@@ -40,10 +41,11 @@ function getSharingText(): string {
   const emojis: string[] = []
   for (let i = 0; i < guesses.value.length; ++i) {
     const guess = guesses.value[i].word
+    const colors = getLettersColors(guess, wordToFind)
     emojis.push(
       guess
         .split('')
-        .map((l, j) => positionToEmoji(letterValidity(l, j)))
+        .map((l, j) => positionToEmoji(colors[j]))
         .join(''),
     )
   }

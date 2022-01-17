@@ -90,22 +90,6 @@ export function doesWordExist(word: string): boolean {
   )
 }
 
-/**
- * @deprecated Replace with getLettersColors
- * @param letter
- * @param index
- * @returns
- */
-export function letterValidity(letter: string, index: number): LetterPosition {
-  if (wordToFind[index] === letter) {
-    return LetterPosition.Perfect
-  }
-  if (wordToFind.includes(letter)) {
-    return LetterPosition.Misplaced
-  }
-  return LetterPosition.Invalid
-}
-
 export function getLettersColors(
   guess: string,
   word = wordToFind,

@@ -54,7 +54,7 @@ import {
   guesses,
   isGameover,
   LetterPosition,
-  letterValidity,
+  wordToFind,
 } from '@/composables/game-state'
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
@@ -142,11 +142,12 @@ function pressEnter(): void {
   saveConfirmedWords(guesses.value.map(o => o.word))
 
   // Save incorrect letters to darken them
-  for (let i = 0; i < word.length; ++i) {
-    if (letterValidity(word[i], i) === LetterPosition.Invalid) {
-      invalidLetters.value.add(word[i])
-    }
-  }
+  word
+    .split('')
+    .filter(l => !wordToFind.includes(l))
+    .forEach(l => {
+      invalidLetters.value.add(l)
+    })
 
   if (isGameover.value) {
     saveScore()
