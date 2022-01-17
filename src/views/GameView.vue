@@ -25,7 +25,7 @@
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === LetterPosition.Invalid,
             }"
-            :style="{ transitionDelay: `${(x + 1) * 200}ms` }">
+            :style="{ transitionDelay: `${(x + 1) * ANIM_SPEED}ms` }">
             <span v-html="getLetter(y, x)" />
           </LetterBox>
         </template>
@@ -58,6 +58,7 @@ import {
 } from '@/composables/game-state'
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
+import { ANIM_SPEED } from '@/constants'
 import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
 
 const grid = ref<HTMLDivElement | null>(null)
@@ -65,8 +66,13 @@ watchEffect(() => {
   if (grid.value) onSizeChange()
 })
 
-const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
+/**
+ * Animating the letters color changes
+ */
+const animating = ref(false)
+const isCaretVisible = ref(true)
 
+const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
 const currentRowIndex = computed(() =>
   currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
 )
@@ -108,8 +114,13 @@ function onKeyPress(e: KeyboardEvent): void {
   }
 }
 
+function isKeyboardActive(): boolean {
+  return !isGameover.value && !animating.value
+}
+
 function pressLetter(letter: string): void {
-  if (!currentGuess.value || isGameover.value) return
+  startBlinkingCaret()
+  if (!currentGuess.value || !isKeyboardActive()) return
   if (currentGuess.value.word.length === 5) {
     return
   }
@@ -117,7 +128,8 @@ function pressLetter(letter: string): void {
 }
 
 function pressBackspace(): void {
-  if (!currentGuess.value) return
+  startBlinkingCaret()
+  if (!currentGuess.value || !isKeyboardActive()) return
   currentGuess.value.word = currentGuess.value.word.substring(
     0,
     currentGuess.value.word.length - 1,
@@ -125,7 +137,16 @@ function pressBackspace(): void {
 }
 
 function pressEnter(): void {
-  if (!currentGuess.value || isGameover.value) return
+  inputWord()
+
+  animating.value = true
+  setTimeout(() => {
+    animating.value = false
+  }, ANIM_SPEED * 6)
+}
+
+function inputWord(): void {
+  if (!currentGuess.value || !isKeyboardActive()) return
   const word = currentGuess.value.word
   if (word.length < 5) return
 
@@ -161,14 +182,32 @@ function getLetter(wordIndex: number, letterIndex: number): string {
     wordIndex === currentRowIndex.value &&
     letterIndex === currentColumnIndex.value
   ) {
-    return '_'
+    return !animating.value && !isGameover.value && isCaretVisible.value
+      ? '_'
+      : ''
   }
   return '&nbsp;'
+}
+
+let timerCaret: NodeJS.Timer
+function startBlinkingCaret(): void {
+  stopBlinkingCaret()
+  isCaretVisible.value = true
+  timerCaret = setInterval(() => {
+    isCaretVisible.value = !isCaretVisible.value
+  }, 750)
+}
+
+function stopBlinkingCaret(): void {
+  if (timerCaret) {
+    clearInterval(timerCaret)
+  }
 }
 
 onMounted(() => {
   window.addEventListener('resize', onSizeChange)
   document.addEventListener('keydown', onKeyPress) // Note: 'keypress' doesn't work for backspace
+  startBlinkingCaret()
 
   /**
    * Load saved words at startup
@@ -176,12 +215,13 @@ onMounted(() => {
   const savedWords = loadConfirmedWords()
   for (let i = 0; i < savedWords.length; ++i) {
     guesses.value[i].word = savedWords[i]
-    pressEnter()
+    inputWord()
   }
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', onSizeChange)
   document.removeEventListener('keydown', onKeyPress)
+  stopBlinkingCaret()
 })
 </script>
