@@ -23,7 +23,8 @@
       -
       <a
         class="underline"
-        href="https://github.com/scambier/wordle-fr">Code source</a>
+        href="https://github.com/scambier/wordle-fr"
+        target="_blank">Code source</a>
     </div>
   </ModalBase>
 </template>
