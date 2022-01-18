@@ -1,9 +1,10 @@
 import { differenceInDays } from 'date-fns'
-import { ref, watchEffect } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 
+import { K_WELCOME } from '@/constants'
 import { getCurrentDate } from '@/utils'
 
-import { lastWelcomeDate, setLastWelcomeDate } from '../storage'
+import { getItem, setItem } from '../storage'
 import { isGameover, isWinner } from './game-state'
 
 export const isVisibleModalLoser = ref(false)
@@ -17,12 +18,19 @@ watchEffect(() => {
 })
 
 const now = getCurrentDate()
+
+const lastWelcomeDate = ref(new Date(getItem(K_WELCOME, '1970-01-01')))
+watch(lastWelcomeDate, v => {
+  setItem(K_WELCOME, v.toISOString())
+})
+
 /**
  * Defaults to true if the welcome screen was not shown for at least 2 days
  */
 export const isVisibleModalWelcome = ref(
-  differenceInDays(now, lastWelcomeDate) >= 2,
+  differenceInDays(now, lastWelcomeDate.value) >= 2,
 )
+
 if (isVisibleModalWelcome.value) {
-  setLastWelcomeDate()
+  lastWelcomeDate.value = getCurrentDate()
 }

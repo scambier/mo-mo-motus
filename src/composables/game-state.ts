@@ -62,7 +62,7 @@ watch(isGameover, val => {
   if (val) {
     setTimeout(() => {
       isVisibleModalStats.value = true
-    }, 200 * 7)
+    }, 200 * 7 + 1000)
   }
 })
 

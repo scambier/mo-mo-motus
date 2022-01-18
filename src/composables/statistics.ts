@@ -1,13 +1,12 @@
 import { merge } from 'lodash-es'
 import { ref, watch } from 'vue'
 
+import { K_STATS } from '@/constants'
 import * as storage from '@/storage'
 import { GameStats } from '@/types'
 import { getSessionId } from '@/utils'
 
 import { countTotalGuesses, isWinner } from './game-state'
-
-const K_STATS = 'mts_stats'
 
 export const gameStats = ref<GameStats>(loadStats())
 watch(

@@ -1,20 +1,23 @@
-
-import { getCurrentDate, getSessionId, hashStr } from '@/utils'
+import { getSessionId, hashStr } from '@/utils'
 import words from '@/words-list'
 
 import { guesses, initSessionForToday } from './composables/game-state'
+import { K_LEXICON, K_SESSION, K_WORDS } from './constants'
 
-const K_SESSION = 'mts_session'
-const K_WORDS = 'mts_words'
-const K_WELCOME = 'mts_lastWelcome'
-const K_LEXICON = 'mts_lexiconHash'
 const toClean = [K_SESSION, K_WORDS]
 
 export function setItem(k: string, v: string): void {
   return localStorage.setItem(k, v)
 }
-export function getItem(k: string): string | null {
-  return localStorage.getItem(k)
+export function getItem(k: string): string | null
+export function getItem(k: string, defaultValue: string): string
+export function getItem(k: string, defaultValue?: string): string | null {
+  try {
+    return localStorage.getItem(k) ?? null
+  }
+  catch (e) {
+    return defaultValue ?? null
+  }
 }
 
 /**
@@ -69,19 +72,6 @@ export function loadConfirmedWords(): string[] {
     initSessionForToday(true)
     return []
   }
-}
-
-export const lastWelcomeDate: Date = (() => {
-  try {
-    return new Date(getItem(K_WELCOME)!)
-  }
-  catch (e) {
-    return new Date('1970-01-01')
-  }
-})()
-
-export function setLastWelcomeDate(): void {
-  localStorage.setItem(K_WELCOME, getCurrentDate().toISOString())
 }
 
 export function hasSessionIdChanged(): boolean {
