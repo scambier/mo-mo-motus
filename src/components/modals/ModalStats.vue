@@ -24,7 +24,7 @@
             class="min-w-fit max-w-full font-bold text-right"
             :class="{
               'bg-green-dimmed': gamesOfScore(i) > 0,
-              'bg-gray-600': gamesOfScore(i) === 0,
+              'bg-gray-600': gamesOfScore(i) === 0 || i === 0,
             }"
             :style="{ width: winPercentage(i) + '%' }">
             <span class="mx-1">{{ gamesOfScore(i) }}</span>
