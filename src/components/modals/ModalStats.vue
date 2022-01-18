@@ -48,6 +48,7 @@
 </template>
 
 <script setup lang="ts">
+import { groupBy } from 'lodash-es'
 import { ref } from 'vue'
 
 import SharingPanel from '@/components/common/SharingPanel.vue'
@@ -88,8 +89,18 @@ const statsTexts = ref([
 ])
 
 function getRandomEmoji(): string {
-  if (isGameover.value && isWinner.value) { return randomItem(['🎉', '✨', '✔', '🙌']) }
+  if (isGameover.value && isWinner.value) {
+    return randomItem(['🎉', '✨', '✔', '🙌'])
+  }
   return ''
+}
+
+function mostCommonScore(): number {
+  const grouped = groupBy(games, 'score')
+  return Object.keys(grouped).reduce(
+    (prev, k) => (grouped[k].length > prev ? grouped[k].length : prev),
+    0,
+  )
 }
 
 function gamesOfScore(score: number): number {
@@ -100,6 +111,6 @@ function gamesOfScore(score: number): number {
 }
 
 function winPercentage(score: number): number {
-  return (gamesOfScore(score) / games.length || 0) * 100
+  return (gamesOfScore(score) / mostCommonScore() || 0) * 100
 }
 </script>
