@@ -17,22 +17,22 @@ import {
   getLettersColors,
   guesses,
   isWinner,
-  LetterPosition,
   numberOfGamesSinceStart,
   wordToFind,
 } from '@/composables/game-state'
 import { showToast } from '@/composables/toast-manager'
+import { KeyColor } from '@/constants'
 import IconShare from '~icons/ph/share-network'
 
 import ButtonGreen from './ButtonGreen.vue'
 
-function positionToEmoji(pos: LetterPosition): string {
+function keyColorToEmoji(pos: KeyColor): string {
   switch (pos) {
-    case LetterPosition.Invalid:
+    case KeyColor.Black:
       return '⬛'
-    case LetterPosition.Misplaced:
+    case KeyColor.Yellow:
       return '🟨'
-    case LetterPosition.Perfect:
+    case KeyColor.Green:
       return '🟩'
   }
 }
@@ -45,7 +45,7 @@ function getSharingText(): string {
     emojis.push(
       guess
         .split('')
-        .map((l, j) => positionToEmoji(colors[j]))
+        .map((l, j) => keyColorToEmoji(colors[j]))
         .join(''),
     )
   }

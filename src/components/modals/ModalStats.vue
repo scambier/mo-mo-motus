@@ -76,7 +76,7 @@ const statsTexts = ref([
   },
   {
     label: 'Victoires',
-    value: (games.filter(g => g.won).length / games.length || 0) * 100 + '%',
+    value: Math.round((games.filter(g => g.won).length / games.length || 0) * 100) + '%',
   },
   {
     label: 'Série de<br>victoires',

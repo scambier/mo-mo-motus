@@ -1,5 +1,6 @@
 {
-  "name": "vue-project",
+  "name": "mo-mo-motus",
+  "private": true,
   "version": "0.0.0",
   "scripts": {
     "start": "pnpm run dev",

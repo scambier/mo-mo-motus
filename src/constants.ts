@@ -6,3 +6,9 @@ export const K_WORDS = 'mts_words'
 export const K_WELCOME = 'mts_lastWelcome'
 export const K_LEXICON = 'mts_lexiconHash'
 export const K_STATS = 'mts_stats'
+
+export enum KeyColor {
+  Black = 0,
+  Green,
+  Yellow,
+}

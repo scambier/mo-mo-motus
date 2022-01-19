@@ -16,14 +16,14 @@
             :class="{
               'bg-green-dimmed border-green-dimmed ':
                 guesses[y].confirmed &&
-                getLettersColors(guesses[y].word)[x] === LetterPosition.Perfect,
+                getLettersColors(guesses[y].word)[x] === KeyColor.Green,
               'bg-yellow-dimmed border-yellow-dimmed ':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] ===
-                LetterPosition.Misplaced,
+                KeyColor.Yellow,
               'bg-slate-700 border-slate-700 ':
                 guesses[y].confirmed &&
-                getLettersColors(guesses[y].word)[x] === LetterPosition.Invalid,
+                getLettersColors(guesses[y].word)[x] === KeyColor.Black,
             }"
             :style="{ transitionDelay: `${(x + 1) * ANIM_SPEED}ms` }">
             <span v-html="getLetter(y, x)" />
@@ -53,12 +53,11 @@ import {
   getLettersColors,
   guesses,
   isGameover,
-  LetterPosition,
   wordToFind,
 } from '@/composables/game-state'
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
-import { ANIM_SPEED } from '@/constants'
+import { ANIM_SPEED, KeyColor } from '@/constants'
 import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
 
 const grid = ref<HTMLDivElement | null>(null)

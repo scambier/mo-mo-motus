@@ -1,11 +1,13 @@
 import { describe, expect, test } from 'vitest'
 
-import { getLettersColors, LetterPosition } from '../game-state'
+import { KeyColor } from '@/constants'
+
+import { getLettersColors } from '../game-state'
 
 describe('The game-state composable', () => {
-  const b = LetterPosition.Invalid
-  const g = LetterPosition.Perfect
-  const y = LetterPosition.Misplaced
+  const b = KeyColor.Black
+  const g = KeyColor.Green
+  const y = KeyColor.Yellow
 
   test('getLettersColors', () => {
     expect(getLettersColors('daaaa', 'radia')).toEqual([y, g, b, b, g])

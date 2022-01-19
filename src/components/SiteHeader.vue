@@ -9,7 +9,7 @@
       </button>
     </div>
     <h1 class="flex-1 text-3xl font-bold text-center">
-      MO-MO-MOTUS<span class="text-sm"> beta</span>
+      MO-MO-MOTUS
     </h1>
     <div class="pr-2 w-8 text-xl">
       <button

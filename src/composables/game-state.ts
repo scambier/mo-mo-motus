@@ -1,13 +1,13 @@
 import {
-  addDays,
   addHours,
   differenceInHours,
   differenceInMinutes,
-  setHours,
-  setMinutes,
+  subHours,
 } from 'date-fns'
+import endOfDay from 'date-fns/endOfDay'
 import { computed, ref, watch } from 'vue'
 
+import { KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
 import { WordInput } from '@/types'
@@ -22,12 +22,6 @@ import words from '@/words-list'
 
 import { isVisibleModalStats } from './modal-manager'
 import { showToast } from './toast-manager'
-
-export enum LetterPosition {
-  Invalid = 0,
-  Perfect,
-  Misplaced,
-}
 
 export const wordToFindAccented = getWordForToday()
 export const wordToFind = wordToFindAccented
@@ -90,20 +84,17 @@ export function doesWordExist(word: string): boolean {
   )
 }
 
-export function getLettersColors(
-  guess: string,
-  word = wordToFind,
-): LetterPosition[] {
+export function getLettersColors(guess: string, word = wordToFind): KeyColor[] {
   const wordLetters = word.split('')
   const guessLetters = guess.split('')
-  const colors: LetterPosition[] = [0, 0, 0, 0, 0]
+  const colors: KeyColor[] = [0, 0, 0, 0, 0]
 
   // First, check green letters
   for (let i = 0; i < guessLetters.length; ++i) {
     const letter = guessLetters[i]
 
     if (letter === wordLetters[i]) {
-      colors[i] = LetterPosition.Perfect
+      colors[i] = KeyColor.Green
       // Remove checked letters to avoid showing 2 yellows for a single letter
       wordLetters[i] = '_'
       guessLetters[i] = ''
@@ -112,7 +103,7 @@ export function getLettersColors(
   for (let i = 0; i < guessLetters.length; ++i) {
     const letter = guessLetters[i]
     if (wordLetters.includes(letter)) {
-      colors[i] = LetterPosition.Misplaced
+      colors[i] = KeyColor.Yellow
       // Remove checked letters to avoid showing 2 yellows for a single letter
       wordLetters[wordLetters.findIndex(o => o === letter)] = '_'
       guessLetters[guessLetters.findIndex(o => o === letter)] = ''
