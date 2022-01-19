@@ -1,4 +1,5 @@
 export const ANIM_SPEED = 200
+export const BXL_TZ = 'Europe/Brussels'
 
 export const K_SESSION = 'mts_session'
 export const K_WORDS = 'mts_words'

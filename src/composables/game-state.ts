@@ -123,13 +123,13 @@ export function getLettersColors(
 
 export function getTimeBeforeNextWord(): string {
   const now = getCurrentDate()
-  const midDay = setHours(now, 12)
-  const tomorrow = setMinutes(setHours(addDays(now, 1), 0), 0)
+  const tomorrow = endOfDay(now)
+  const midDay = subHours(tomorrow, 12)
 
   const next = midDay > now ? midDay : tomorrow
   const h = differenceInHours(next, now)
   const m = differenceInMinutes(next, addHours(now, h))
-  return `${h}h&nbsp;${m}m`
+  return h === 0 ? `${m} minutes` : `${h}h&nbsp;${m}m`
 }
 
 export function numberOfGamesSinceStart(): number {

@@ -1,10 +1,11 @@
 import { differenceInHours, endOfDay, startOfDay } from 'date-fns'
 
+import { BXL_TZ } from './constants'
 import words from './words-list'
 
 export function getCurrentDate(): Date {
   return new Date(
-    new Date().toLocaleString('en-US', { timeZone: 'Europe/Brussels' }),
+    new Date().toLocaleString('en-US', { timeZone: BXL_TZ }),
   )
 }
 
