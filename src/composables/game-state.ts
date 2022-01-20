@@ -29,13 +29,13 @@ export const wordToFind = wordToFindAccented
   .replace(/[\u0300-\u036f]/g, '')
 
 export const isWinner = computed(() =>
-  guesses.value.some(o => o.confirmed && o.word === wordToFind),
+  guesses.some(o => o.confirmed && o.word === wordToFind),
 )
 export const isGameover = computed(
-  () => isWinner.value || guesses.value.every(o => o.confirmed),
+  () => isWinner.value || guesses.every(o => o.confirmed),
 )
 
-export const guesses = ref<WordInput[]>([
+export const guesses = $ref<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
@@ -48,7 +48,7 @@ export const guesses = ref<WordInput[]>([
  * Number of tries it took to find the answer
  */
 export const countTotalGuesses = computed<number>(() => {
-  return guesses.value.filter(o => !!o.word && o.confirmed).length
+  return guesses.filter(o => !!o.word && o.confirmed).length
 })
 
 watch(isGameover, val => {

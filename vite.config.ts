@@ -8,7 +8,7 @@ process.env.VITE_BUILD_DATE = new Date().toISOString()
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/momomotus/',
-  plugins: [vue(), Icons({ autoInstall: true })],
+  plugins: [vue({ reactivityTransform: true }), Icons({ autoInstall: true })],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
