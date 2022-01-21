@@ -1,15 +1,16 @@
 <template>
   <ModalBase @close="isVisibleModalStats = false">
-    <div class="mb-2 text-2xl">
-      {{ getRandomEmoji() }} Statistiques {{ getRandomEmoji() }}
+    <div class="mb-2 text-2xl border-b border-slate-400">
+      Statistiques
     </div>
     <div class="flex justify-between">
       <div
         class="flex flex-col"
         :key="item.label"
         v-for="item in statsTexts">
-        <span class="text-2xl font-bold md:text-3xl">{{ item.value }}</span><span
-          class="text-xs"
+        <span class="text-2xl font-bold md:text-3xl">{{ item.value }}</span>
+        <span
+          class="text-xs md:text-sm"
           v-html="item.label" />
       </div>
     </div>
@@ -18,7 +19,7 @@
         class="flex mb-1 w-full h-4"
         v-for="i in [1, 2, 3, 4, 5, 6, 0]"
         :key="`bar-${i}`">
-        <span class="mr-1 w-6 text-center">{{ i ? i : '💀' }}</span>
+        <span class="mr-1 w-6 text-center">{{ i ? i : '❌' }}</span>
         <div class="w-full">
           <div
             class="min-w-fit max-w-full font-bold text-right"
@@ -55,45 +56,44 @@ import SharingPanel from '@/components/common/SharingPanel.vue'
 import {
   getTimeBeforeNextWord,
   isGameover,
-  isWinner,
   wordToFind,
   wordToFindAccented,
 } from '@/composables/game-state'
 import { isVisibleModalStats } from '@/composables/modal-manager'
 import { gameStats } from '@/composables/statistics'
-import { randomItem } from '@/utils'
 
 import ModalBase from './ModalBase.vue'
-const stats = gameStats.value
-const games = Object.keys(stats.games)
+const games = Object.keys(gameStats.games)
   .sort()
-  .map(k => ({ date: k, score: stats.games[k].score, won: stats.games[k].won }))
+  .map(k => ({ date: k, score: gameStats.games[k].score, won: gameStats.games[k].won }))
 
 const statsTexts = ref([
   {
     label: 'Parties',
-    value: stats.nbGames,
+    value: gameStats.nbGames,
   },
   {
     label: 'Victoires',
-    value: Math.round((games.filter(g => g.won).length / games.length || 0) * 100) + '%',
+    value:
+      Math.round((games.filter(g => g.won).length / games.length || 0) * 100) +
+      '%',
   },
   {
-    label: 'Série de<br>victoires',
-    value: stats.currentStreak,
+    label: `Victoire${gameStats.currentStreak > 1 ? 's' : ''}<br>en série`,
+    value: gameStats.currentStreak,
   },
   {
     label: 'Meilleure<br>série',
-    value: stats.bestStreak,
+    value: gameStats.bestStreak,
   },
 ])
 
-function getRandomEmoji(): string {
-  if (isGameover.value && isWinner.value) {
-    return randomItem(['🎉', '✨', '✔', '🙌'])
-  }
-  return ''
-}
+// function getRandomEmoji(): string {
+//   if (isGameover.value && isWinner.value) {
+//     return randomItem(['🎉', '✨', '✔', '🙌'])
+//   }
+//   return ''
+// }
 
 function mostCommonScore(): number {
   const grouped = groupBy(games, 'score')
