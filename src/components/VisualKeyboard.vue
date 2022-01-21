@@ -24,7 +24,7 @@
           is="button"
           @click="emit('input', letter)"
           class="basis-[10%] uppercase bg-slate-700 active:bg-slate-700"
-          :class="{ 'text-slate-400 bg-black': greyedOut?.has(letter) }">
+          :class="colorToClass(colors[letter])">
           {{ letter }}
         </LetterBox>
 
@@ -43,6 +43,7 @@
 </template>
 
 <script setup lang="ts">
+import { KeyColor } from '@/constants'
 import IconBackspace from '~icons/ph/backspace'
 import IconReturn from '~icons/ph/key-return'
 
@@ -54,11 +55,24 @@ const emit = defineEmits<{
   (e: 'input', letter: string): void
 }>()
 
-defineProps<{ greyedOut?: Set<string> }>()
+const props = defineProps<{ colors?: { [key: string]: KeyColor } }>()
+
+const colors = props.colors ?? {}
 
 const keyboard = [
   'azertyuiop'.split(''),
   'qsdfghjklm'.split(''),
   'wxcvbn'.split(''),
 ]
+
+function colorToClass(color: KeyColor): string {
+  switch (color) {
+    case KeyColor.Black:
+      return 'text-slate-400 bg-black'
+    case KeyColor.Green:
+      return 'bg-green-dimmed'
+    case KeyColor.Yellow:
+      return 'bg-yellow-dimmed'
+  }
+}
 </script>

@@ -7,7 +7,7 @@ module.exports = {
       flexShrink: { 1.5: 1.5, 2: 2 },
       colors: {
         'green-dimmed': '#198a42',
-        'yellow-dimmed': '#c29308',
+        'yellow-dimmed': '#c28e00',
       },
     },
     fontFamily: {

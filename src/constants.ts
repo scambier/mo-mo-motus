@@ -9,6 +9,6 @@ export const K_STATS = 'mts_stats'
 
 export enum KeyColor {
   Black = 0,
-  Green,
   Yellow,
+  Green,
 }

@@ -12,15 +12,14 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-3xl font-bold uppercase border transition duration-200"
+            class="h-[100%] text-3xl font-bold uppercase border"
             :class="{
               'bg-green-dimmed border-green-dimmed ':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Green,
               'bg-yellow-dimmed border-yellow-dimmed ':
                 guesses[y].confirmed &&
-                getLettersColors(guesses[y].word)[x] ===
-                KeyColor.Yellow,
+                getLettersColors(guesses[y].word)[x] === KeyColor.Yellow,
               'bg-slate-700 border-slate-700 ':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Black,
@@ -38,12 +37,20 @@
       @input="letter => pressLetter(letter)"
       @enter="pressEnter"
       @backspace="pressBackspace"
-      :greyed-out="invalidLetters" />
+      :colors="coloredLetters" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watchEffect } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+  watchEffect,
+} from 'vue'
 
 import LetterBox from '@/components/common/LetterBox.vue'
 import SiteHeader from '@/components/SiteHeader.vue'
@@ -53,7 +60,6 @@ import {
   getLettersColors,
   guesses,
   isGameover,
-  wordToFind,
 } from '@/composables/game-state'
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
@@ -80,7 +86,7 @@ const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
 /**
  * List of letters not in the word
  */
-const invalidLetters = ref<Set<string>>(new Set())
+const coloredLetters = reactive<{ [key: string]: KeyColor }>({})
 
 /**
  * Firefox shows issues with aspect-ratio.
@@ -161,17 +167,41 @@ function inputWord(): void {
   currentGuess.value.confirmed = true
   saveConfirmedWords(guesses.value.map(o => o.word))
 
-  // Save incorrect letters to darken them
-  word
-    .split('')
-    .filter(l => !wordToFind.includes(l))
-    .forEach(l => {
-      invalidLetters.value.add(l)
-    })
+  // Add Green/Yellow/Black colors to keyboard
+  colorizeKeyboard(word)
 
   if (isGameover.value) {
     saveScore()
   }
+}
+
+/**
+ * Colorize letters one by one,
+ * according to the guesses hints
+ */
+function colorizeKeyboard(word: string): void {
+  if (!currentGuess.value) return
+
+  // Compute the colors
+  const colors: { [key: string]: KeyColor } = {}
+  for (let l = 0; l < word.length; ++l) {
+    const letter = word[l]
+    const color = getLettersColors(word)[l]
+    colors[letter] = color
+  }
+
+  // Animate the changes
+  nextTick(() => {
+    // This won't animate the color changes after a reload,
+    // if the game is already over
+    if (isGameover.value && !animating.value) return
+    let count = 0
+    for (const k in colors) {
+      setTimeout(() => {
+        coloredLetters[k] = colors[k]
+      }, ++count * ANIM_SPEED)
+    }
+  })
 }
 
 function getLetter(wordIndex: number, letterIndex: number): string {
