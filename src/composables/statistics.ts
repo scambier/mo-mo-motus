@@ -1,3 +1,5 @@
+import { execSync } from 'child_process'
+import { stat } from 'fs'
 import { merge } from 'lodash-es'
 import { ref, watch } from 'vue'
 
@@ -34,6 +36,22 @@ function loadStats(): GameStats {
     }
   })()
   merge(stats, loaded)
+  const keys = Object.keys(stats.games).sort()
+
+  // Recompute games count
+  stats.bestStreak = 0
+  stats.currentStreak = 0
+  stats.nbGames = keys.length
+  for (const key of keys) {
+    if (stats.games[key].won) {
+      if (++stats.currentStreak > stats.bestStreak) {
+        stats.bestStreak = stats.currentStreak
+      }
+    }
+    else {
+      stats.currentStreak = 0
+    }
+  }
   return stats
 }
 

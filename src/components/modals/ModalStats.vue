@@ -1,15 +1,16 @@
 <template>
   <ModalBase @close="isVisibleModalStats = false">
-    <div class="mb-2 text-2xl">
-      {{ getRandomEmoji() }} Statistiques {{ getRandomEmoji() }}
+    <div class="mb-2 text-2xl border-b border-slate-400">
+      Statistiques
     </div>
     <div class="flex justify-between">
       <div
         class="flex flex-col"
         :key="item.label"
         v-for="item in statsTexts">
-        <span class="text-2xl font-bold md:text-3xl">{{ item.value }}</span><span
-          class="text-xs"
+        <span class="text-2xl font-bold md:text-3xl">{{ item.value }}</span>
+        <span
+          class="text-xs md:text-sm"
           v-html="item.label" />
       </div>
     </div>
@@ -76,10 +77,12 @@ const statsTexts = ref([
   },
   {
     label: 'Victoires',
-    value: Math.round((games.filter(g => g.won).length / games.length || 0) * 100) + '%',
+    value:
+      Math.round((games.filter(g => g.won).length / games.length || 0) * 100) +
+      '%',
   },
   {
-    label: 'Série de<br>victoires',
+    label: `Victoire${stats.currentStreak > 1 ? 's' : ''}<br>en série`,
     value: stats.currentStreak,
   },
   {
@@ -88,12 +91,12 @@ const statsTexts = ref([
   },
 ])
 
-function getRandomEmoji(): string {
-  if (isGameover.value && isWinner.value) {
-    return randomItem(['🎉', '✨', '✔', '🙌'])
-  }
-  return ''
-}
+// function getRandomEmoji(): string {
+//   if (isGameover.value && isWinner.value) {
+//     return randomItem(['🎉', '✨', '✔', '🙌'])
+//   }
+//   return ''
+// }
 
 function mostCommonScore(): number {
   const grouped = groupBy(games, 'score')
