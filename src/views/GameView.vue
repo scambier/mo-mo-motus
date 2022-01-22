@@ -65,7 +65,7 @@ import {
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
 import { ANIM_SPEED, KeyColor } from '@/constants'
-import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
+import { loadConfirmedWords } from '@/storage'
 
 const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {
@@ -78,9 +78,9 @@ watchEffect(() => {
 const animating = ref(false)
 const isCaretVisible = ref(true)
 
-const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
+const currentGuess = computed(() => guesses.find(o => !o.confirmed))
 const currentRowIndex = computed(() =>
-  currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
+  currentGuess.value ? guesses.indexOf(currentGuess.value) : -1,
 )
 const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
 
@@ -166,7 +166,6 @@ function inputWord(): void {
   }
 
   currentGuess.value.confirmed = true
-  saveConfirmedWords(guesses.value.map(o => o.word))
 
   // Add Green/Yellow/Black colors to keyboard
   colorizeKeyboard(word)
@@ -207,7 +206,7 @@ function colorizeKeyboard(word: string): void {
 }
 
 function getLetter(wordIndex: number, letterIndex: number): string {
-  const letter = guesses.value[wordIndex]?.word[letterIndex]
+  const letter = guesses[wordIndex]?.word[letterIndex]
   if (letter) return letter
   if (
     wordIndex === currentRowIndex.value &&
@@ -245,7 +244,7 @@ onMounted(() => {
    */
   const savedWords = loadConfirmedWords()
   for (let i = 0; i < savedWords.length; ++i) {
-    guesses.value[i].word = savedWords[i]
+    guesses[i].word = savedWords[i]
     inputWord()
   }
 })

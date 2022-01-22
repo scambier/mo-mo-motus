@@ -1,4 +1,3 @@
-import { plausible } from '@/tracking'
 import { getSessionId, hashStr } from '@/utils'
 import words from '@/words-list'
 
@@ -43,7 +42,7 @@ export function cleanState(appSessionKey: string, force = false): boolean {
   // Save the session key
   setItem(K_SESSION, appSessionKey)
 
-  return hasSession && guesses.value.some(o => !!o.word)
+  return hasSession && guesses.some(o => !!o.word)
 }
 
 /**
@@ -54,14 +53,6 @@ export function checkIfNewLexicon(): boolean {
   const oldHash = getItem(K_LEXICON) ?? ''
   setItem(K_LEXICON, hash.toString())
   return !!oldHash && hash.toString() !== oldHash
-}
-
-export function saveConfirmedWords(words: string[]): void {
-  if (words.filter(w => !!w).length === 1) {
-    // "start game" = "first word input"
-    plausible.trackEvent('start_game')
-  }
-  setItem(K_WORDS, JSON.stringify(words))
 }
 
 export function loadConfirmedWords(): string[] {
