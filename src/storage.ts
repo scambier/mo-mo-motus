@@ -1,3 +1,4 @@
+import { plausible } from '@/tracking'
 import { getSessionId, hashStr } from '@/utils'
 import words from '@/words-list'
 
@@ -56,6 +57,10 @@ export function checkIfNewLexicon(): boolean {
 }
 
 export function saveConfirmedWords(words: string[]): void {
+  if (words.filter(w => !!w).length === 1) {
+    // "start game" = "first word input"
+    plausible.trackEvent('start_game')
+  }
   setItem(K_WORDS, JSON.stringify(words))
 }
 

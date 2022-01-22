@@ -3,6 +3,7 @@ import { reactive, watch } from 'vue'
 
 import { K_STATS } from '@/constants'
 import * as storage from '@/storage'
+import { plausible } from '@/tracking'
 import { GameStats } from '@/types'
 import { getSessionId } from '@/utils'
 
@@ -63,6 +64,8 @@ function setScore(seed: string, won: boolean, score: number): void {
   // Don't overwrite an existing score
   if (!stats.games[seed]) {
     stats.games[seed] = { score, won }
+    plausible.trackEvent(won ? 'win_game' : 'lose_game')
+    plausible.trackEvent('end_game')
   }
 }
 

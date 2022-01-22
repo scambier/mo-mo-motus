@@ -35,10 +35,12 @@ import {
   isVisibleModalWelcome,
 } from './composables/modal-manager'
 import { hasSessionIdChanged } from './storage'
+import { plausible } from './tracking'
 
 onMounted(() => {
   initSessionForToday()
   window.addEventListener('focus', checkAndReset)
+  plausible.enableAutoPageviews()
 })
 
 onUnmounted(() => {
