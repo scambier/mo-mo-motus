@@ -12,7 +12,7 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-3xl font-bold uppercase border"
+            class="h-[100%] text-3xl font-bold uppercase border md:text-4xl"
             :class="{
               'bg-green-dimmed border-green-dimmed':
                 guesses[y].confirmed &&
