@@ -187,7 +187,7 @@ function colorizeKeyboard(word: string): void {
   for (let l = 0; l < word.length; ++l) {
     const letter = word[l]
     const color = getLettersColors(word)[l]
-    colors[letter] = color
+    colors[letter] = (!colors[letter] || color > colors[letter]) ? color : colors[letter]
   }
 
   // Animate the changes
