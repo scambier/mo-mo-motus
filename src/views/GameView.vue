@@ -14,15 +14,16 @@
             v-for="x in [0, 1, 2, 3, 4]"
             class="h-[100%] text-3xl font-bold uppercase border"
             :class="{
-              'bg-green-dimmed border-green-dimmed ':
+              'bg-green-dimmed border-green-dimmed':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Green,
-              'bg-yellow-dimmed border-yellow-dimmed ':
+              'bg-yellow-dimmed border-yellow-dimmed':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Yellow,
-              'bg-slate-700 border-slate-700 ':
+              'bg-slate-700 border-slate-700':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Black,
+              'border-slate-600': !guesses[y].confirmed,
             }"
             :style="{ transitionDelay: `${(x + 1) * ANIM_SPEED}ms` }">
             <span v-html="getLetter(y, x)" />
@@ -187,7 +188,8 @@ function colorizeKeyboard(word: string): void {
   for (let l = 0; l < word.length; ++l) {
     const letter = word[l]
     const color = getLettersColors(word)[l]
-    colors[letter] = (!colors[letter] || color > colors[letter]) ? color : colors[letter]
+    colors[letter] =
+      !colors[letter] || color > colors[letter] ? color : colors[letter]
   }
 
   // Animate the changes
