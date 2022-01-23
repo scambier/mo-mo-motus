@@ -45,9 +45,8 @@ export const guesses = reactive<WordInput[]>([
   { word: '', confirmed: false },
 ])
 watch(
-  guesses,
-  () => {
-    const words = guesses.filter(o => o.confirmed).map(o => o.word)
+  () => guesses.filter(o => o.confirmed).map(o => o.word),
+  words => {
     if (words.filter(w => !!w).length === 1) {
       // Register a "start_game" event once the first word is input
       plausible.trackEvent('start_game')
@@ -55,7 +54,6 @@ watch(
     // Save confirmed words in storage to re-add them after a refresh
     storage.setItem(K_WORDS, JSON.stringify(words))
   },
-  { deep: true },
 )
 
 /**
