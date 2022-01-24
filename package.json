@@ -46,6 +46,7 @@
     "vite": "^2.7.7",
     "vite-plugin-pwa": "^0.11.13",
     "vitest": "^0.1.17",
-    "vue-tsc": "^0.29.8"
+    "vue-tsc": "^0.29.8",
+    "workbox-window": "^6.4.2"
   }
 }
