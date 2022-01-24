@@ -19,7 +19,7 @@
         class="flex mb-1 w-full h-4"
         v-for="i in [1, 2, 3, 4, 5, 6, 0]"
         :key="`bar-${i}`">
-        <span class="mr-1 w-6 text-center">{{ i ? i : '💀' }}</span>
+        <span class="mr-1 w-6 text-center">{{ i ? i : '❌' }}</span>
         <div class="w-full">
           <div
             class="min-w-fit max-w-full font-bold text-right"
@@ -56,24 +56,21 @@ import SharingPanel from '@/components/common/SharingPanel.vue'
 import {
   getTimeBeforeNextWord,
   isGameover,
-  isWinner,
   wordToFind,
   wordToFindAccented,
 } from '@/composables/game-state'
 import { isVisibleModalStats } from '@/composables/modal-manager'
 import { gameStats } from '@/composables/statistics'
-import { randomItem } from '@/utils'
 
 import ModalBase from './ModalBase.vue'
-const stats = gameStats.value
-const games = Object.keys(stats.games)
+const games = Object.keys(gameStats.games)
   .sort()
-  .map(k => ({ date: k, score: stats.games[k].score, won: stats.games[k].won }))
+  .map(k => ({ date: k, score: gameStats.games[k].score, won: gameStats.games[k].won }))
 
 const statsTexts = ref([
   {
     label: 'Parties',
-    value: stats.nbGames,
+    value: gameStats.nbGames,
   },
   {
     label: 'Victoires',
@@ -82,12 +79,12 @@ const statsTexts = ref([
       '%',
   },
   {
-    label: `Victoire${stats.currentStreak > 1 ? 's' : ''}<br>en série`,
-    value: stats.currentStreak,
+    label: `Victoire${gameStats.currentStreak > 1 ? 's' : ''}<br>en série`,
+    value: gameStats.currentStreak,
   },
   {
     label: 'Meilleure<br>série',
-    value: stats.bestStreak,
+    value: gameStats.bestStreak,
   },
 ])
 

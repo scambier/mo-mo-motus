@@ -39,8 +39,8 @@ function keyColorToEmoji(pos: KeyColor): string {
 
 function getSharingText(): string {
   const emojis: string[] = []
-  for (let i = 0; i < guesses.value.length; ++i) {
-    const guess = guesses.value[i].word
+  for (let i = 0; i < guesses.length; ++i) {
+    const guess = guesses[i].word
     const colors = getLettersColors(guess, wordToFind)
     emojis.push(
       guess

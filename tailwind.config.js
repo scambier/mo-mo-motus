@@ -11,7 +11,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ['Source Sans Pro', 'ui-sans-serif', 'system-ui', 'apple-system'],
+      sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'apple-system'],
     },
   },
   plugins: [],

@@ -12,17 +12,18 @@
         <template v-for="y in [0, 1, 2, 3, 4, 5]">
           <LetterBox
             v-for="x in [0, 1, 2, 3, 4]"
-            class="h-[100%] text-3xl font-bold uppercase border"
+            class="h-[100%] text-3xl font-bold uppercase border md:text-4xl"
             :class="{
-              'bg-green-dimmed border-green-dimmed ':
+              'bg-green-dimmed border-green-dimmed':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Green,
-              'bg-yellow-dimmed border-yellow-dimmed ':
+              'bg-yellow-dimmed border-yellow-dimmed':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Yellow,
-              'bg-slate-700 border-slate-700 ':
+              'bg-slate-700 border-slate-700':
                 guesses[y].confirmed &&
                 getLettersColors(guesses[y].word)[x] === KeyColor.Black,
+              'border-slate-600': !guesses[y].confirmed,
             }"
             :style="{ transitionDelay: `${(x + 1) * ANIM_SPEED}ms` }">
             <span v-html="getLetter(y, x)" />
@@ -64,7 +65,7 @@ import {
 import { saveScore } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
 import { ANIM_SPEED, KeyColor } from '@/constants'
-import { loadConfirmedWords, saveConfirmedWords } from '@/storage'
+import { loadConfirmedWords } from '@/storage'
 
 const grid = ref<HTMLDivElement | null>(null)
 watchEffect(() => {
@@ -77,9 +78,9 @@ watchEffect(() => {
 const animating = ref(false)
 const isCaretVisible = ref(true)
 
-const currentGuess = computed(() => guesses.value.find(o => !o.confirmed))
+const currentGuess = computed(() => guesses.find(o => !o.confirmed))
 const currentRowIndex = computed(() =>
-  currentGuess.value ? guesses.value.indexOf(currentGuess.value) : -1,
+  currentGuess.value ? guesses.indexOf(currentGuess.value) : -1,
 )
 const currentColumnIndex = computed(() => currentGuess.value?.word.length ?? -1)
 
@@ -165,7 +166,6 @@ function inputWord(): void {
   }
 
   currentGuess.value.confirmed = true
-  saveConfirmedWords(guesses.value.map(o => o.word))
 
   // Add Green/Yellow/Black colors to keyboard
   colorizeKeyboard(word)
@@ -187,7 +187,8 @@ function colorizeKeyboard(word: string): void {
   for (let l = 0; l < word.length; ++l) {
     const letter = word[l]
     const color = getLettersColors(word)[l]
-    colors[letter] = color
+    colors[letter] =
+      !colors[letter] || color > colors[letter] ? color : colors[letter]
   }
 
   // Animate the changes
@@ -205,7 +206,7 @@ function colorizeKeyboard(word: string): void {
 }
 
 function getLetter(wordIndex: number, letterIndex: number): string {
-  const letter = guesses.value[wordIndex]?.word[letterIndex]
+  const letter = guesses[wordIndex]?.word[letterIndex]
   if (letter) return letter
   if (
     wordIndex === currentRowIndex.value &&
@@ -243,7 +244,7 @@ onMounted(() => {
    */
   const savedWords = loadConfirmedWords()
   for (let i = 0; i < savedWords.length; ++i) {
-    guesses.value[i].word = savedWords[i]
+    guesses[i].word = savedWords[i]
     inputWord()
   }
 })

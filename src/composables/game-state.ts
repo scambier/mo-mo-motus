@@ -5,11 +5,12 @@ import {
   subHours,
 } from 'date-fns'
 import endOfDay from 'date-fns/endOfDay'
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 
-import { KeyColor } from '@/constants'
+import { K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
+import { plausible } from '@/tracking'
 import { WordInput } from '@/types'
 import {
   getCurrentDate,
@@ -29,13 +30,13 @@ export const wordToFind = wordToFindAccented
   .replace(/[\u0300-\u036f]/g, '')
 
 export const isWinner = computed(() =>
-  guesses.value.some(o => o.confirmed && o.word === wordToFind),
+  guesses.some(o => o.confirmed && o.word === wordToFind),
 )
 export const isGameover = computed(
-  () => isWinner.value || guesses.value.every(o => o.confirmed),
+  () => isWinner.value || guesses.every(o => o.confirmed),
 )
 
-export const guesses = ref<WordInput[]>([
+export const guesses = reactive<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
   { word: '', confirmed: false },
@@ -43,12 +44,23 @@ export const guesses = ref<WordInput[]>([
   { word: '', confirmed: false },
   { word: '', confirmed: false },
 ])
+watch(
+  () => guesses.filter(o => o.confirmed).map(o => o.word),
+  words => {
+    if (words.filter(w => !!w).length === 1) {
+      // Register a "start_game" event once the first word is input
+      plausible.trackEvent('start_game')
+    }
+    // Save confirmed words in storage to re-add them after a refresh
+    storage.setItem(K_WORDS, JSON.stringify(words))
+  },
+)
 
 /**
  * Number of tries it took to find the answer
  */
 export const countTotalGuesses = computed<number>(() => {
-  return guesses.value.filter(o => !!o.word && o.confirmed).length
+  return guesses.filter(o => !!o.word && o.confirmed).length
 })
 
 watch(isGameover, val => {
