@@ -2,15 +2,16 @@ import {
   addHours,
   differenceInHours,
   differenceInMinutes,
+  endOfDay,
   subHours,
 } from 'date-fns'
-import endOfDay from 'date-fns/endOfDay'
+import { utcToZonedTime } from 'date-fns-tz'
 import { computed, reactive, watch } from 'vue'
 
-import { K_WORDS, KeyColor } from '@/constants'
+import { plausible } from '@/analytics'
+import { BXL_TZ, K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
-import { plausible } from '@/analytics'
 import { WordInput } from '@/types'
 import {
   getCurrentDate,
@@ -136,6 +137,9 @@ export function getTimeBeforeNextWord(): string {
 }
 
 export function numberOfGamesSinceStart(): number {
-  const startDate = new Date(import.meta.env.VITE_STARTING_DATE as string)
-  return numberOfHalfDays(startDate, new Date())
+  const startDate = utcToZonedTime(
+    new Date(import.meta.env.VITE_STARTING_DATE as string),
+    BXL_TZ,
+  )
+  return numberOfHalfDays(startDate, getCurrentDate())
 }

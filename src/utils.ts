@@ -1,12 +1,11 @@
 import { differenceInHours, endOfDay, startOfDay } from 'date-fns'
+import { utcToZonedTime } from 'date-fns-tz'
 
 import { BXL_TZ } from './constants'
 import words from './words-list'
 
 export function getCurrentDate(): Date {
-  return new Date(
-    new Date().toLocaleString('en-US', { timeZone: BXL_TZ }),
-  )
+  return utcToZonedTime(new Date(), BXL_TZ)
 }
 
 export function getSessionId(): string {
