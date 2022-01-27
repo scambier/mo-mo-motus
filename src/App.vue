@@ -28,6 +28,7 @@ import { onMounted, onUnmounted } from 'vue'
 import ModalWelcome from '@/components/modals/ModalWelcome.vue'
 import ToastMessage from '@/components/ToastMessage.vue'
 
+import { plausible } from './analytics'
 import ModalStats from './components/modals/ModalStats.vue'
 import { initSessionForToday } from './composables/game-state'
 import {
@@ -35,7 +36,6 @@ import {
   isVisibleModalWelcome,
 } from './composables/modal-manager'
 import { hasSessionIdChanged } from './storage'
-import { plausible } from './tracking'
 
 onMounted(() => {
   initSessionForToday()

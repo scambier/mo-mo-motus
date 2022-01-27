@@ -10,7 +10,7 @@ import { computed, reactive, watch } from 'vue'
 import { K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
-import { plausible } from '@/tracking'
+import { plausible } from '@/analytics'
 import { WordInput } from '@/types'
 import {
   getCurrentDate,

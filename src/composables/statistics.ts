@@ -1,9 +1,9 @@
 import { merge } from 'lodash-es'
 import { reactive, watch } from 'vue'
 
+import { plausible } from '@/analytics'
 import { K_STATS } from '@/constants'
 import * as storage from '@/storage'
-import { plausible } from '@/tracking'
 import { GameStats } from '@/types'
 import { getSessionId } from '@/utils'
 
