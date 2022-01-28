@@ -7,6 +7,8 @@ export const K_WELCOME = 'mts_lastWelcome'
 export const K_LEXICON = 'mts_lexiconHash'
 export const K_STATS = 'mts_stats'
 
+export const GAME_STARTING_DATE = '2022-01-12'
+
 export enum KeyColor {
   Black = 0,
   Yellow,

@@ -9,26 +9,25 @@ import { utcToZonedTime } from 'date-fns-tz'
 import { computed, reactive, watch } from 'vue'
 
 import { plausible } from '@/analytics'
-import { BXL_TZ, K_WORDS, KeyColor } from '@/constants'
+import { BXL_TZ, GAME_STARTING_DATE, K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
 import { WordInput } from '@/types'
 import {
   getCurrentDate,
   getSessionId,
-  initPRNG,
   normalizeWord,
   numberOfHalfDays,
+  shuffle,
 } from '@/utils'
 import words from '@/words-list'
 
 import { isVisibleModalStats } from './modal-manager'
 import { showToast } from './toast-manager'
 
+const shuffled = shuffle(words)
 export const wordToFindAccented = getWordForToday()
-export const wordToFind = wordToFindAccented
-  .normalize('NFD')
-  .replace(/[\u0300-\u036f]/g, '')
+export const wordToFind = normalizeWord(wordToFindAccented)
 
 export const isWinner = computed(() =>
   guesses.some(o => o.confirmed && o.word === wordToFind),
@@ -86,8 +85,12 @@ export function initSessionForToday(forceClean = false): void {
 }
 
 export function getWordForToday(): string {
-  const prng = initPRNG()
-  return words[Math.floor(prng() * words.length)]
+  if (import.meta.env.DEV) {
+    console.log(shuffled)
+    console.log(numberOfGamesSinceStart())
+    console.log(shuffled[numberOfGamesSinceStart()])
+  }
+  return shuffled[numberOfGamesSinceStart()]
 }
 
 export function doesWordExist(word: string): boolean {
@@ -138,7 +141,7 @@ export function getTimeBeforeNextWord(): string {
 
 export function numberOfGamesSinceStart(): number {
   const startDate = utcToZonedTime(
-    new Date(import.meta.env.VITE_STARTING_DATE as string),
+    new Date(GAME_STARTING_DATE as string),
     BXL_TZ,
   )
   return numberOfHalfDays(startDate, getCurrentDate())
