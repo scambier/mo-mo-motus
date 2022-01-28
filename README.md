@@ -4,7 +4,7 @@
 
 **[Jouez en ligne !](https://scambier.xyz/momomotus/)**
 
-Un nouveau mot est choisi chaque jour à midi et minuit.
+Un nouveau mot est choisi chaque jour à midi et minuit (CET).
 
 ## Credits / références
 

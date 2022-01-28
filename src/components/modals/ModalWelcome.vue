@@ -1,7 +1,7 @@
 <template>
   <ModalBase @close="isVisibleModalWelcome = false">
     <p class="mb-4">
-      Chaque jour, à midi et minuit, un nouveau mot de 5 lettres est choisi au
+      Chaque jour, à midi et minuit (CET), un nouveau mot de 5 lettres est choisi au
       hasard.<br><strong>Il s'agit du même mot, pour tous les joueurs.</strong>
     </p>
     <p class="mb-4">
