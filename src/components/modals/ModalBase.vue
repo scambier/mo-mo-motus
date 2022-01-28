@@ -5,6 +5,7 @@
     <div
       class="relative p-8 m-4 mt-16 w-[32rem] max-w-full h-fit text-lg text-center bg-slate-900 rounded-lg border-2 border-slate-600">
       <button
+        aria-label="Fermer"
         class="absolute top-2 right-2 text-xl"
         @click="emit('close', false)">
         <IconClose />

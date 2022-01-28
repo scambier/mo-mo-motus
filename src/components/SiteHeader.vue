@@ -3,6 +3,7 @@
     class="flex flex-row justify-between items-end py-2 mb-2 w-full border-b border-slate-400">
     <div class="pl-2 w-8 text-xl">
       <button
+        aria-label="Instructions"
         @click="isVisibleModalWelcome = true"
         class="h-fit">
         <IconQuestion />
@@ -13,6 +14,7 @@
     </h1>
     <div class="pr-2 w-8 text-xl">
       <button
+        aria-label="Statistiques et partage"
         @click="isVisibleModalStats = true"
         class="h-fit">
         <IconChart />
