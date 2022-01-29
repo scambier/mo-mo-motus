@@ -1,8 +1,8 @@
 <template>
   <ModalBase @close="isVisibleModalWelcome = false">
     <p class="mb-4">
-      Chaque jour, à midi et minuit (CET), un nouveau mot de 5 lettres est choisi au
-      hasard.<br><strong>Il s'agit du même mot, pour tous les joueurs.</strong>
+      Chaque jour, à midi et minuit (CET), un nouveau mot de 5 lettres est
+      choisi au hasard.<br><strong>Il s'agit du même mot, pour tous les joueurs.</strong>
     </p>
     <p class="mb-4">
       Vous avez 6 essais pour trouver le mot en question.<br>
@@ -25,6 +25,10 @@
         class="underline"
         href="https://github.com/scambier/wordle-fr"
         target="_blank">Code source</a>
+      <br><br>
+      <div class="text-right text-slate-700">
+        Build {{ buildDate }}
+      </div>
     </div>
   </ModalBase>
 </template>
@@ -34,4 +38,6 @@ import ButtonGreen from '@/components/common/ButtonGreen.vue'
 import { isVisibleModalWelcome } from '@/composables/modal-manager'
 
 import ModalBase from './ModalBase.vue'
+
+const buildDate = import.meta.env.VITE_BUILD_DATE
 </script>
