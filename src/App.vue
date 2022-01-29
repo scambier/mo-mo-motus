@@ -1,13 +1,21 @@
 <template>
-  <router-view />
-  <Transition>
-    <ModalWelcome v-if="isVisibleModalWelcome" />
-  </Transition>
-  <Transition>
-    <ModalStats v-if="isVisibleModalStats" />
-  </Transition>
+  <div
+    v-if="showMaintenance"
+    class="container m-4 text-center">
+    Maintenance en cours, désolé :(<br>
+    Revenez pour le prochain mot
+  </div>
+  <div v-else>
+    <router-view />
+    <Transition>
+      <ModalWelcome v-if="isVisibleModalWelcome" />
+    </Transition>
+    <Transition>
+      <ModalStats v-if="isVisibleModalStats" />
+    </Transition>
 
-  <ToastMessage />
+    <ToastMessage />
+  </div>
 </template>
 
 <style scoped>
@@ -23,7 +31,8 @@
 </style>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { utcToZonedTime } from 'date-fns-tz'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 import ModalWelcome from '@/components/modals/ModalWelcome.vue'
 import ToastMessage from '@/components/ToastMessage.vue'
@@ -35,6 +44,7 @@ import {
   isVisibleModalStats,
   isVisibleModalWelcome,
 } from './composables/modal-manager'
+import { BXL_TZ } from './constants'
 import { hasSessionIdChanged } from './storage'
 
 onMounted(() => {
@@ -57,4 +67,13 @@ function checkAndReset(): void {
     location.reload()
   }
 }
+
+function isInMaintenance(): boolean {
+  const end = utcToZonedTime(new Date(2022, 0, 29, 12, 0, 0), BXL_TZ)
+  return utcToZonedTime(new Date(), BXL_TZ) < end
+}
+const showMaintenance = ref(isInMaintenance())
+setInterval(() => {
+  showMaintenance.value = isInMaintenance()
+}, 1000 * 60)
 </script>
