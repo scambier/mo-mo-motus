@@ -14,12 +14,15 @@ fs.readFile(path.join(__dirname, '/liste-reduite.txt'), function (err, data) {
     .join(' ')
     .split(' ')
 
-  // First filter
+  // keep only 5 letters long, and filter out bad words
   const filtered = words.filter(
     w =>
       w.length === 5 &&
       !['cedex', 'nègre', 'conne', 'sicav', 'vulgo'].includes(w),
   )
+
+  // Add some others
+  filtered.push('kayak')
 
   // Removed identical words, with different accents
   const withoutDupes = []
