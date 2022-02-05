@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
+  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-screen">
     <!-- Header -->
     <SiteHeader />
 
@@ -36,7 +36,7 @@
 
     <!-- Keyboard -->
     <VisualKeyboard
-      class="grow-0 shrink-0 px-1 w-full h-48 md:mb-16"
+      class="grow-0 shrink-0 px-1 mb-4 w-full h-48 md:mb-16"
       @input="letter => pressLetter(letter)"
       @enter="pressEnter"
       @backspace="pressBackspace"
@@ -104,7 +104,7 @@ function onSizeChange(): void {
 function onKeyPress(e: KeyboardEvent): void {
   const k = e.key.toLowerCase()
 
-if (k === '?') {
+  if (k === '?') {
     pressLetter('?')
   }
 
