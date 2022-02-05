@@ -1,8 +1,11 @@
 <template>
   <ModalBase @close="isVisibleModalWelcome = false">
-    <p class="mb-4">
+    <p class="mb-4 text-sm">
       Chaque jour, à midi et minuit (CET), un nouveau mot de 5 lettres est
-      choisi au hasard.<br><strong>Il s'agit du même mot, pour tous les joueurs.</strong>
+      choisi au hasard.
+    </p>
+    <p class="mb-4">
+      <strong>Il s'agit du même mot,<br>pour tous les joueurs.</strong>
     </p>
     <p class="mb-4">
       Vous avez 6 essais pour trouver le mot en question.<br>
@@ -10,23 +13,27 @@
       Une lettre mal placée est 🟨.<br>
       Une lettre qui n'est pas dans le mot reste ⬛.
     </p>
+    <div class="mb-4 border-y">
+      <strong>✨ Nouveauté ✨</strong><br>
+      <div class="text-sm">
+        Du mal à trouver un mot ? Utilisez
+        <span class="px-1 rounded border">?</span>
+        pour remplir les cases manquantes et vous aider à visualiser !
+      </div>
+    </div>
     <div>
       <ButtonGreen @click="isVisibleModalWelcome = false">
         C'est parti !
       </ButtonGreen>
     </div>
-    <div class="mt-16 text-xs">
+
+    <div class="flex place-content-between mt-4 text-xs">
       <a
-        class="underline"
-        href="https://www.powerlanguage.co.uk/wordle/"
-        target="_blank">Le jeu Wordle original</a>
-      -
-      <a
-        class="underline"
+        class="text-slate-300 underline"
         href="https://github.com/scambier/wordle-fr"
-        target="_blank">Code source</a>
-      <br><br>
-      <div class="text-right text-slate-700">
+        target="_blank">Code source <IconGithub class="inline" /></a>
+      <br>
+      <div class="text-slate-600">
         Build {{ buildDate }}
       </div>
     </div>
@@ -36,6 +43,7 @@
 <script setup lang="ts">
 import ButtonGreen from '@/components/common/ButtonGreen.vue'
 import { isVisibleModalWelcome } from '@/composables/modal-manager'
+import IconGithub from '~icons/ph/github-logo'
 
 import ModalBase from './ModalBase.vue'
 

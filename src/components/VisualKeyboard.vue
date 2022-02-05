@@ -62,7 +62,7 @@ const colors = props.colors ?? {}
 const keyboard = [
   'azertyuiop'.split(''),
   'qsdfghjklm'.split(''),
-  'wxcvbn'.split(''),
+  'wxcvbn?'.split(''),
 ]
 
 function colorToClass(color: KeyColor): string {

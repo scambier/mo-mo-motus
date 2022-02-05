@@ -26,7 +26,9 @@
               'border-slate-600': !guesses[y].confirmed,
             }"
             :style="{ transitionDelay: `${(x + 1) * ANIM_SPEED}ms` }">
-            <span v-html="getLetter(y, x)" />
+            <span
+              v-html="getLetter(y, x)"
+              :class="{ 'font-thin text-slate-500': getLetter(y, x) === '?' }" />
           </LetterBox>
         </template>
       </div>
@@ -100,8 +102,13 @@ function onSizeChange(): void {
 }
 
 function onKeyPress(e: KeyboardEvent): void {
-  if (e.shiftKey || e.ctrlKey) return
   const k = e.key.toLowerCase()
+
+if (k === '?') {
+    pressLetter('?')
+  }
+
+  if (e.shiftKey || e.ctrlKey) return
   const keyCode = k.charCodeAt(0)
 
   // Key between "a" and "z"
