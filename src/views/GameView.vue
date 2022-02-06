@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-screen">
+  <div class="flex flex-col items-center mx-auto w-full max-w-lg h-full">
     <!-- Header -->
     <SiteHeader />
 

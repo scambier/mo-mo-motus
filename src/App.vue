@@ -5,7 +5,9 @@
     Maintenance en cours, désolé :(<br>
     Revenez pour le prochain mot
   </div>
-  <div v-else>
+  <div
+    v-else
+    class="h-full">
     <router-view />
     <Transition>
       <ModalWelcome v-if="isVisibleModalWelcome" />
