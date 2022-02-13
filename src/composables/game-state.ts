@@ -76,10 +76,9 @@ export function initSessionForToday(forceClean = false): void {
   const appSessionKey = getSessionId()
 
   // Clean the stored state if a new word is available
-  const newLexicon = storage.checkIfNewLexicon()
-  const newSession = storage.cleanState(appSessionKey, forceClean || newLexicon)
+  const newSession = storage.cleanState(appSessionKey, forceClean)
 
-  if (newSession || newLexicon) {
+  if (newSession) {
     showToast('Un nouveau mot à deviner a été choisi.', 5000)
   }
 }

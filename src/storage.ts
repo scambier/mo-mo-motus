@@ -1,8 +1,7 @@
-import { getSessionId, hashStr } from '@/utils'
-import words from '@/words-list'
+import { getSessionId } from '@/utils'
 
 import { guesses, initSessionForToday } from './composables/game-state'
-import { K_LEXICON, K_SESSION, K_WORDS } from './constants'
+import { K_SESSION, K_WORDS } from './constants'
 
 const toClean = [K_SESSION, K_WORDS]
 
@@ -43,16 +42,6 @@ export function cleanState(appSessionKey: string, force = false): boolean {
   setItem(K_SESSION, appSessionKey)
 
   return hasSession && guesses.some(o => !!o.word)
-}
-
-/**
- * Returns true if the lexicon has changed since last check
- */
-export function checkIfNewLexicon(): boolean {
-  const hash = hashStr(words.join(''))
-  const oldHash = getItem(K_LEXICON) ?? ''
-  setItem(K_LEXICON, hash.toString())
-  return !!oldHash && hash.toString() !== oldHash
 }
 
 export function loadConfirmedWords(): string[] {
