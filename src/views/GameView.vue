@@ -69,10 +69,8 @@ import { showToast } from '@/composables/toast-manager'
 import { ANIM_SPEED, KeyColor } from '@/constants'
 import { loadConfirmedWords } from '@/storage'
 
-const grid = ref<HTMLDivElement | null>(null)
-watchEffect(() => {
-  if (grid.value) onSizeChange()
-})
+const grid = ref<HTMLDivElement|null>(null)
+watchEffect(() => onSizeChange)
 
 /**
  * Animating the letters color changes
