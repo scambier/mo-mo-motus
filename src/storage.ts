@@ -1,9 +1,7 @@
 import { getSessionId } from '@/utils'
 
-import { guesses, initSessionForToday } from './composables/game-state'
+import { initSessionForToday } from './composables/game-state'
 import { K_SESSION, K_WORDS } from './constants'
-
-const toClean = [K_SESSION, K_WORDS]
 
 export function setItem(k: string, v: string): void {
   return localStorage.setItem(k, v)
@@ -21,27 +19,30 @@ export function getItem(k: string, defaultValue?: string): string | null {
 
 /**
  * Return true if there was an existing session, and it has been reset
- * @param appSessionKey
- * @param force
  * @returns
  */
-export function cleanState(appSessionKey: string, force = false): boolean {
-  const hasSession = !!getItem(K_SESSION)
+export function cleanState(): boolean {
+  const appSessionKey = getSessionId()
 
-  // Do nothing if the session id is unchanged
-  if (getItem(K_SESSION) === appSessionKey && !force) {
+  // No current session
+  if (!getItem(K_SESSION)) {
+    // Remove existing guesses (if any)
+    localStorage.removeItem(K_WORDS)
+    // Save the session key
+    setItem(K_SESSION, appSessionKey)
     return false
   }
 
-  // Clear
-  for (const k of toClean) {
-    localStorage.removeItem(k)
+  // Outdated session
+  if (getItem(K_SESSION) !== appSessionKey) {
+    localStorage.removeItem(K_SESSION)
+    localStorage.removeItem(K_WORDS)
+    setItem(K_SESSION, appSessionKey)
+    return true
   }
 
-  // Save the session key
-  setItem(K_SESSION, appSessionKey)
-
-  return hasSession && guesses.some(o => !!o.word)
+  // Else, the session exists _and_ is current
+  return false
 }
 
 export function loadConfirmedWords(): string[] {
@@ -54,7 +55,7 @@ export function loadConfirmedWords(): string[] {
   }
   catch (e) {
     console.error(e)
-    initSessionForToday(true)
+    initSessionForToday()
     return []
   }
 }

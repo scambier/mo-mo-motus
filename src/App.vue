@@ -65,7 +65,7 @@ onUnmounted(() => {
  */
 function checkAndReset(): void {
   if (hasSessionIdChanged()) {
-    initSessionForToday(true)
+    initSessionForToday()
     location.reload()
   }
 }
