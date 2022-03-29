@@ -1,5 +1,14 @@
-import { differenceInHours, endOfDay, startOfDay } from 'date-fns'
-import { utcToZonedTime } from 'date-fns-tz'
+import {
+  addHours,
+  differenceInDays,
+  differenceInHours,
+  endOfDay,
+  isEqual,
+  isSameDay,
+  startOfDay,
+  subHours,
+} from 'date-fns'
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 
 import { BXL_TZ, GAME_STARTING_DATE } from './constants'
 
@@ -21,9 +30,24 @@ export function isMorning(date: Date): boolean {
 }
 
 export function numberOfHalfDays(from: Date, to: Date): number {
-  from = isMorning(from) ? startOfDay(from) : endOfDay(from)
-  to = isMorning(to) ? startOfDay(to) : endOfDay(to)
-  return Math.floor(differenceInHours(to, from) / 12)
+  from = isMorning(from)
+    ? addHours(startOfDay(from), 5)
+    : subHours(endOfDay(from), 5)
+  to = isMorning(to) ? addHours(startOfDay(to), 5) : subHours(endOfDay(to), 5)
+
+  const hours = nearestMultiple(differenceInHours(to, from), 6)
+
+  return Math.floor(hours / 12)
+}
+
+function nearestMultiple(val: number, mul: number): number {
+  const resto = val % mul
+  if (resto <= mul / 2) {
+    return val - resto
+  }
+  else {
+    return val + mul - resto
+  }
 }
 
 export function shuffle<T>(array: T[]): T[] {
