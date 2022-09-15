@@ -20,6 +20,7 @@ import {
   numberOfGamesSinceStart,
   wordToFind,
 } from '@/composables/game-state'
+import { gameStats } from '@/composables/statistics'
 import { showToast } from '@/composables/toast-manager'
 import { KeyColor } from '@/constants'
 import IconShare from '~icons/ph/share-network'
@@ -50,7 +51,7 @@ function getSharingText(): string {
     )
   }
   const tries = `✔️ ${countTotalGuesses.value}/6`
-  return `Mo-mo-motus n°${numberOfGamesSinceStart()}\n${emojis
+  return `Mo-mo-motus n°${numberOfGamesSinceStart()}\nSérie: ${gameStats.currentStreak}\n${emojis
     .filter(o => !!o)
     .join('\n')}${
     isWinner.value ? tries : '❌'
