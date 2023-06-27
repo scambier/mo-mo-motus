@@ -24,7 +24,7 @@ import words from '@/words-list'
 import { isVisibleModalStats } from './modal-manager'
 import { showToast } from './toast-manager'
 
-const shuffled = shuffle(words)
+export const shuffled: Readonly<string[]> = shuffle(words)
 export const wordToFindAccented = getWordForToday()
 export const wordToFind = normalizeWord(wordToFindAccented)
 
