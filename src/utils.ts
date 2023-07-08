@@ -1,14 +1,11 @@
 import {
   addHours,
-  differenceInDays,
   differenceInHours,
   endOfDay,
-  isEqual,
-  isSameDay,
   startOfDay,
   subHours,
 } from 'date-fns'
-import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
+import { utcToZonedTime } from 'date-fns-tz'
 
 import { BXL_TZ, GAME_STARTING_DATE } from './constants'
 import words from './words-list'
@@ -69,17 +66,15 @@ export function shuffle<T>(array: T[]): T[] {
     randomIndex = Math.floor(random() * currentIndex)
     currentIndex--
 
-    // And swap it with the current element.
-    ;[array[currentIndex], array[randomIndex]] = [
-      array[randomIndex],
-      array[currentIndex],
-    ]
+      // And swap it with the current element.
+      ;[array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ]
   }
 
   return array
 }
-
-export const random = initPRNG()
 
 /**
  * https://stackoverflow.com/a/7616484
@@ -124,7 +119,13 @@ function mulberry32(a: number) {
 
 function initPRNG(): () => number {
   // Prefix the seed when in dev to avoid spoiling myself while working on it
-  const prefix = import.meta.env.DEV ? 'dev-' : ''
+  let prefix = import.meta.env.DEV ? 'dev-' : ''
+  // console.log(numberOfGamesSinceStart())
+  if (numberOfGamesSinceStart() > words.length) {
+    prefix += Math.floor(numberOfGamesSinceStart() / words.length)
+  }
   const hashed = hashStr(prefix + GAME_STARTING_DATE)
   return mulberry32(hashed)
 }
+
+export const random = initPRNG()
