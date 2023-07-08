@@ -16,6 +16,7 @@ import { WordInput } from '@/types'
 import {
   getCurrentDate,
   normalizeWord,
+  numberOfGamesSinceStart,
   numberOfHalfDays,
   shuffle,
 } from '@/utils'
@@ -135,10 +136,3 @@ export function getTimeBeforeNextWord(): string {
   return h === 0 ? `${m} minutes` : `${h}h&nbsp;${m}m`
 }
 
-export function numberOfGamesSinceStart(): number {
-  const startDate = utcToZonedTime(
-    new Date(GAME_STARTING_DATE as string),
-    BXL_TZ,
-  )
-  return numberOfHalfDays(startDate, getCurrentDate())
-}

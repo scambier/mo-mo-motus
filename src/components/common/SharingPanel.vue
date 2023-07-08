@@ -17,7 +17,6 @@ import {
   getLettersColors,
   guesses,
   isWinner,
-  numberOfGamesSinceStart,
   wordToFind,
 } from '@/composables/game-state'
 import { gameStats } from '@/composables/statistics'
@@ -26,6 +25,7 @@ import { KeyColor } from '@/constants'
 import IconShare from '~icons/ph/share-network'
 
 import ButtonGreen from './ButtonGreen.vue'
+import { numberOfGamesSinceStart } from '@/utils'
 
 function keyColorToEmoji(pos: KeyColor): string {
   switch (pos) {

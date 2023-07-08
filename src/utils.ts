@@ -11,6 +11,7 @@ import {
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 
 import { BXL_TZ, GAME_STARTING_DATE } from './constants'
+import words from './words-list'
 
 export function getCurrentDate(): Date {
   return utcToZonedTime(new Date(), BXL_TZ)
@@ -38,6 +39,14 @@ export function numberOfHalfDays(from: Date, to: Date): number {
   const hours = nearestMultiple(differenceInHours(to, from), 6)
 
   return Math.floor(hours / 12)
+}
+
+export function numberOfGamesSinceStart(): number {
+  const startDate = utcToZonedTime(
+    new Date(GAME_STARTING_DATE as string),
+    BXL_TZ,
+  )
+  return numberOfHalfDays(startDate, getCurrentDate()) % words.length
 }
 
 function nearestMultiple(val: number, mul: number): number {

@@ -27,11 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import { numberOfGamesSinceStart } from '@/composables/game-state'
 import {
   isVisibleModalStats,
   isVisibleModalWelcome,
 } from '@/composables/modal-manager'
+import { numberOfGamesSinceStart } from '@/utils';
 import IconChart from '~icons/ph/chart-bar'
 import IconQuestion from '~icons/ph/question'
 </script>
