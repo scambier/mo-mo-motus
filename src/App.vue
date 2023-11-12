@@ -39,7 +39,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 import ModalWelcome from '@/components/modals/ModalWelcome.vue'
 import ToastMessage from '@/components/ToastMessage.vue'
 
-import { plausible } from './analytics'
+// import { plausible } from './analytics'
 import ModalStats from './components/modals/ModalStats.vue'
 import { initSessionForToday } from './composables/game-state'
 import {
@@ -52,7 +52,7 @@ import { hasSessionIdChanged } from './storage'
 onMounted(() => {
   initSessionForToday()
   window.addEventListener('focus', checkAndReset)
-  plausible.enableAutoPageviews()
+  // plausible.enableAutoPageviews()
 })
 
 onUnmounted(() => {

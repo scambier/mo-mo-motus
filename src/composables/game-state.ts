@@ -8,7 +8,7 @@ import {
 import { utcToZonedTime } from 'date-fns-tz'
 import { computed, reactive, watch } from 'vue'
 
-import { plausible } from '@/analytics'
+// import { plausible } from '@/analytics'
 import { BXL_TZ, GAME_STARTING_DATE, K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
@@ -49,7 +49,9 @@ watch(
   words => {
     if (words.filter(w => !!w).length === 1) {
       // Register a "start_game" event once the first word is input
-      plausible.trackEvent('start_game')
+      // plausible.trackEvent('start_game')
+      // @ts-ignore
+      umami.track('start_game')
     }
     // Save confirmed words in storage to re-add them after a refresh
     storage.setItem(K_WORDS, JSON.stringify(words))
