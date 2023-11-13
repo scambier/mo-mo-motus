@@ -1,7 +1,6 @@
 import { merge } from 'lodash-es'
 import { reactive, watch } from 'vue'
 
-import { plausible } from '@/analytics'
 import { K_STATS } from '@/constants'
 import * as storage from '@/storage'
 import { GameStats } from '@/types'
@@ -64,11 +63,7 @@ function setScore(seed: string, won: boolean, score: number): void {
   // Don't overwrite an existing score
   if (!stats.games[seed]) {
     stats.games[seed] = { score, won }
-    // plausible.trackEvent(won ? 'win_game' : 'lose_game')
-    // plausible.trackEvent('end_game')
-    // @ts-ignore
     umami.track(won ? 'win_game' : 'lose_game')
-    // @ts-ignore
     umami.track('end_game')
   }
 }

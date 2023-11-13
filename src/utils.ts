@@ -19,7 +19,6 @@ export function getSessionId(): string {
   // https://stackoverflow.com/a/28149561
   const tzoffset = now.getTimezoneOffset() * 60000
   const localISOTime = new Date(now.getTime() - tzoffset).toISOString()
-  console.log(localISOTime.slice(0, 10))
   return localISOTime.slice(0, 10) + (isMorning(now) ? '-0' : '-1')
 }
 
