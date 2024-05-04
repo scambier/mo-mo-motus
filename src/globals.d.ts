@@ -1,3 +1,3 @@
 declare var umami: {
-  track: (event: string, payload?: any) => void;
-};
+  track: (event: string, payload?: any) => void
+}

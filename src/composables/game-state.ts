@@ -5,10 +5,9 @@ import {
   endOfDay,
   subHours,
 } from 'date-fns'
-import { utcToZonedTime } from 'date-fns-tz'
 import { computed, reactive, watch } from 'vue'
 
-import { BXL_TZ, GAME_STARTING_DATE, K_WORDS, KeyColor } from '@/constants'
+import { K_WORDS, KeyColor } from '@/constants'
 import acceptedGuesses from '@/guesses-list'
 import * as storage from '@/storage'
 import { WordInput } from '@/types'
@@ -16,7 +15,6 @@ import {
   getCurrentDate,
   normalizeWord,
   numberOfGamesSinceStart,
-  numberOfHalfDays,
   shuffle,
 } from '@/utils'
 import words from '@/words-list'
@@ -134,4 +132,3 @@ export function getTimeBeforeNextWord(): string {
   const m = differenceInMinutes(next, addHours(now, h))
   return h === 0 ? `${m} minutes` : `${h}h&nbsp;${m}m`
 }
-

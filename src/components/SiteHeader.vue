@@ -1,7 +1,7 @@
 <template>
   <div
-    class="flex flex-row justify-between items-end py-2 mb-2 w-full border-b border-slate-400">
-    <div class="pl-2 w-8 text-xl">
+    class="mb-2 flex w-full flex-row items-end justify-between border-b border-slate-400 py-2">
+    <div class="w-8 pl-2 text-xl">
       <button
         aria-label="Instructions"
         @click="isVisibleModalWelcome = true"
@@ -9,10 +9,10 @@
         <IconQuestion />
       </button>
     </div>
-    <h1 class="flex-1 text-3xl font-bold text-center">
+    <h1 class="flex-1 text-center text-3xl font-bold">
       MO-MO-MOTUS
     </h1>
-    <div class="pr-2 w-8 text-xl">
+    <div class="w-8 pr-2 text-xl">
       <button
         aria-label="Statistiques et partage"
         @click="isVisibleModalStats = true"
@@ -31,7 +31,7 @@ import {
   isVisibleModalStats,
   isVisibleModalWelcome,
 } from '@/composables/modal-manager'
-import { numberOfGamesSinceStart } from '@/utils';
+import { numberOfGamesSinceStart } from '@/utils'
 import IconChart from '~icons/ph/chart-bar'
 import IconQuestion from '~icons/ph/question'
 </script>

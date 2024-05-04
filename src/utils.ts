@@ -65,11 +65,11 @@ export function shuffle<T>(array: T[]): T[] {
     randomIndex = Math.floor(random() * currentIndex)
     currentIndex--
 
-      // And swap it with the current element.
-      ;[array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-      ]
+    // And swap it with the current element.
+    ;[array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ]
   }
 
   return array
