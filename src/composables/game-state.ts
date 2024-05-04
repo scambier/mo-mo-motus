@@ -84,7 +84,7 @@ export function getWordForToday(): string {
     console.log(numberOfGamesSinceStart())
     console.log(shuffled[numberOfGamesSinceStart()])
   }
-  return shuffled[numberOfGamesSinceStart()]
+  return shuffled[numberOfGamesSinceStart() % words.length]
 }
 
 export function doesWordExist(word: string): boolean {

@@ -42,7 +42,7 @@ export function numberOfGamesSinceStart(): number {
     new Date(GAME_STARTING_DATE as string),
     BXL_TZ,
   )
-  return numberOfHalfDays(startDate, getCurrentDate()) % words.length
+  return numberOfHalfDays(startDate, getCurrentDate())
 }
 
 function nearestMultiple(val: number, mul: number): number {
