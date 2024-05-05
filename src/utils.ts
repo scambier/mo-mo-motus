@@ -42,6 +42,7 @@ export function numberOfGamesSinceStart(): number {
     new Date(GAME_STARTING_DATE as string),
     BXL_TZ,
   )
+
   return numberOfHalfDays(startDate, getCurrentDate())
 }
 
@@ -119,7 +120,6 @@ function mulberry32(a: number) {
 function initPRNG(): () => number {
   // Prefix the seed when in dev to avoid spoiling myself while working on it
   let prefix = import.meta.env.DEV ? 'dev-' : ''
-  // console.log(numberOfGamesSinceStart())
   if (numberOfGamesSinceStart() > words.length) {
     prefix += Math.floor(numberOfGamesSinceStart() / words.length)
   }

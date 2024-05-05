@@ -5,7 +5,7 @@
       choisi au hasard.
     </p>
     <p class="mb-4">
-      <strong>Il s'agit du même mot,<br>pour tous les joueurs.</strong>
+      <strong>Il s'agit du même mot, pour tous les joueurs.</strong>
     </p>
     <p class="mb-4">
       Vous avez 6 essais pour trouver le mot en question.<br>
