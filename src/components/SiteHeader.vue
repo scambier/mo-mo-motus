@@ -22,7 +22,7 @@
     </div>
   </div>
   <div>
-    <span>Puzzle n°{{ numberOfGamesSinceStart() }}</span>
+    <span>Puzzle n°{{ numberOfGamesSinceStart() + OLD_COUNT }}</span>
   </div>
 </template>
 
@@ -31,6 +31,7 @@ import {
   isVisibleModalStats,
   isVisibleModalWelcome,
 } from '@/composables/modal-manager'
+import { OLD_COUNT } from '@/constants'
 import { numberOfGamesSinceStart } from '@/utils'
 import IconChart from '~icons/ph/chart-bar'
 import IconQuestion from '~icons/ph/question'
